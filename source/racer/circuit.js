@@ -281,7 +281,7 @@ class Circuit
                 //Render.sprite(ctx, width, height, resolution, roadWidth, sprites, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
                 /**
                  * makes sprites visible
-                */
+                *
                 if (currSegment.sprites.length) {
           
                     for (let i = 0; i < currSegment.sprites.length; i++) {
@@ -309,13 +309,14 @@ class Circuit
                         }
                     }
                 }
+                */
                          
                 clipBottomLine = currBottomLine; 
-                this.texture.clear();
-                var player = this.scene.player;
-                this.texture.draw(player.sprite, player.screen.x, player.screen.y);
             }
         }
+        this.texture.clear();
+        var player = this.scene.player;
+        this.texture.draw(player.sprite, player.screen.x, player.screen.y);
 	}
 
     /**
