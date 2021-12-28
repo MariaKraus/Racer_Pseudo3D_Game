@@ -70,7 +70,7 @@ class MainScene extends Phaser.Scene
 
 
         */
-        this.load.image('housesLeft', 'source/assets/house1_klein.png');
+        this.load.image('housesLeft', 'source/assets/house1_L.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
     
