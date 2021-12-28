@@ -36,7 +36,6 @@ class Player
          
     }
 
-
     /**
      * Restarts player
      */
@@ -46,11 +45,6 @@ class Player
         this.z = 0;
         this.speed = this.maxSpeed;
     }
-
-    init() {
-        this
-    }
-
 
     /**
      * Updates player position
