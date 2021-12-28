@@ -229,7 +229,7 @@ class Circuit
                         curr_sprite.setDepth(1);
                         
                         let destW = 15*(curr_sprite.width * p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth); //currSegment.sprites[i].spriteRef.offset;
-                        let destH = 15*(450* p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth);
+                        let destH = 15*(705* p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth);
                         let sprite_x = p1.x - p1.w; - destW;
                         let sprite_y = p1.y;
 
