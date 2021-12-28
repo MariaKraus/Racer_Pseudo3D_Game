@@ -51,7 +51,7 @@ class MainScene extends Phaser.Scene
      */
     preload() {
 
-        this.load.image('imgBack', '../assets/img_back.png');
+        this.load.image('imgBack', 'source/assets/img_back.png');
         
         //this.load.setPath('assets/sprites');
         /*this.load.spritesheet([
@@ -70,7 +70,7 @@ class MainScene extends Phaser.Scene
 
 
         */
-        this.load.image('housesLeft', '../assets/house1_klein.png');
+        this.load.image('housesLeft', 'source/assets/house1_klein.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
     
