@@ -96,7 +96,7 @@ class Circuit
             mod = 30;
         }
         if (n % mod == 0 ) {
-            console.log(this.counter);
+            //console.log(this.counter);
             this.addSegmentSprite(n, 'housesLeft', -1);
         }
 
