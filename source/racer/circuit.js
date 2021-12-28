@@ -15,10 +15,8 @@ class Circuit
         // texture to draw the sprites on it
 		this.texture = scene.add.renderTexture(0, 0, SCREEN_W, SCREEN_H);
 
-
-
         this.segments = [];
-        this.segmentLength = 60;
+        this.segmentLength = 100;
         this.roadWidth = (SCREEN_W > SCREEN_H)? (0.4 * SCREEN_W) : (0.4 * SCREEN_H );
 
         SPRITES.SCALE = 0.3 * (1/this.roadWidth);
@@ -142,10 +140,11 @@ class Circuit
             //console.log(this.counter);
             this.addSegmentSprite(n, 'housesLeft', -1);
         }
-
     } 
 
     addSegmentSprite(index, spriteKey, offset) {
+        
+        /**
         let sprite = this.scene.add.image(0, 0, spriteKey);
 
         this.segments[index].sprites.push({
@@ -155,6 +154,7 @@ class Circuit
 
         });
         sprite.setVisible(false);
+        */
     }
 
     /**
@@ -311,6 +311,9 @@ class Circuit
                 }
                          
                 clipBottomLine = currBottomLine; 
+                this.texture.clear();
+                var player = this.scene.player;
+                this.texture.draw(player.sprite, playerscreen.x, player.screen.y);
             }
         }
 	}

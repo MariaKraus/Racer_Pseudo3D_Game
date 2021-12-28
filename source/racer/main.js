@@ -9,7 +9,6 @@ const STATE_INIT = 1;
 const STATE_RESTART = 2;
 const STATE_PLAY = 3;
 const STATE_GAMEOVER = 4;
-
 //----------------------------------------------------------------------
 //Global Variables
 //---------------------------------------------------------------------
@@ -21,18 +20,12 @@ var SPRITES = {
     yellow_house:   {x: 5, y: 5, w:450, h:500}
 }
 
-
-
-
-
 // coordinates of the screen center
 var SCREEN_CX = SCREEN_W/2;
 var SCREEN_CY = SCREEN_H/2;
 
 // current state
 var state = STATE_INIT;
-       // our canvas...
-
 
 screen.onresize = screen.onload = function() {
     SCREEN_W  = screen.availWidth;
@@ -66,10 +59,10 @@ class MainScene extends Phaser.Scene
         }
         this.images[0].onerror=function(){alert(img1.src+' failed to load.');};
         this.images[0].scr = '../assets/img_back.png';
-
-
-
         */
+        this.load.image('virus', 'source/assets/virus0.png');
+
+
         this.load.image('housesLeft', 'source/assets/house1_L1.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
@@ -85,13 +78,16 @@ class MainScene extends Phaser.Scene
 
         // array of sprites that will be "manually" drawn on a rendering texture 
 		// => they must be invisible after creation
-		
+		/*
         this.canvas = document.getElementById('canvas');
         this.ctx = canvas.getContext('2d'); // ...and its drawing context
         this.ctx.canvas.width  = SCREEN_W;
         this.ctx.canvas.height = SCREEN_H;  
+        */
 
-        this.sprites = [];
+        this.sprites = [
+            this.add.sprite(0, 200, 'virus').setVisible(false)
+        ];
 
         //settings instance
         this.circuit = new Circuit(this);
@@ -123,6 +119,7 @@ class MainScene extends Phaser.Scene
                 console.log("Init game.");
                 state = STATE_RESTART;
                 this.camera.init();
+                this.player.init();
                 break;
             case STATE_RESTART:
                 console.log("Restart game.");
