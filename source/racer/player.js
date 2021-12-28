@@ -28,6 +28,12 @@ class Player
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
         this.screen.y = SCREEN_CY;
+
+         console.log(this.screen.w);
+         console.log(this.screen.h);
+         console.log(this.screen.x);
+         console.log(this.screen.y);
+         
     }
 
 
