@@ -313,7 +313,7 @@ class Circuit
                 clipBottomLine = currBottomLine; 
                 this.texture.clear();
                 var player = this.scene.player;
-                this.texture.draw(player.sprite, playerscreen.x, player.screen.y);
+                this.texture.draw(player.sprite, player.screen.x, player.screen.y);
             }
         }
 	}

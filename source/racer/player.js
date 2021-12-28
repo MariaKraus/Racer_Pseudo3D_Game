@@ -27,7 +27,7 @@ class Player
         this.screen.w = this.sprite.width;
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
-        this.screen.y = this.screen.h / 2;
+        this.screen.y = SCREEN_CY;
     }
 
 
