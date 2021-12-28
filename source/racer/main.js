@@ -86,7 +86,7 @@ class MainScene extends Phaser.Scene
         */
 
         this.sprites = [
-            this.add.sprite(0, 200, 'virus').setVisible(false)
+            this.add.image(0, 0, 'virus').setVisible(false)
         ];
 
         //settings instance
