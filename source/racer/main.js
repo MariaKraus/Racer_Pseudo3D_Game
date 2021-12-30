@@ -34,11 +34,13 @@ screen.onresize = screen.onload = function() {
     SCREEN_H = screen.availHeight;
 }
 
+
 class MainScene extends Phaser.Scene
 {
     constructor() {
         super({key: 'SceneMain'});
         //canvas = document.getElementById('canvas');       // our canvas...      
+     
     }
 
     /**
@@ -73,6 +75,8 @@ class MainScene extends Phaser.Scene
      * Creates all objects
      */
     create() {
+        this.scale.lockOrientation('landscape');
+
         		// backgrounds
 		// backgrounds
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
