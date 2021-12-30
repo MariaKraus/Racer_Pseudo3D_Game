@@ -1,8 +1,10 @@
 
-        var ROAD = {
-            LENGTH: { NONE: 0, SHORT:  50, MEDIUM:  75, LONG:  100 },
-            CURVE:  { NONE: 0, EASY:    2, MEDIUM:   4, HARD:    6 }
-        };
+var ROAD = {
+    LENGTH: { NONE: 0, SHORT:  50, MEDIUM:  75, LONG:  100 },
+    CURVE:  { NONE: 0, EASY:    2, MEDIUM:   4, HARD:    6 }
+};
+
+
 class Circuit
 {
     constructor(scene) {
