@@ -4,7 +4,7 @@ class Settings
         this.scene = scene;
 		
 		var font = {font: '32px Arial', fill: '#000000'};
-		this.txtPause= scene.add.text(5, 5 , '', font);
+		this.txtPause= scene.add.text(423,423 , '', font);
 		this.show();
 	}
 	
@@ -12,6 +12,6 @@ class Settings
 	* Shows all settings.
 	*/	
 	show(){
-		this.txtPause.text = "[P] Pause";
+		this.txtPause.text = "SPACE Pause";
 	}
 }
