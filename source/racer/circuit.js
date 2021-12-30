@@ -320,11 +320,9 @@ class Circuit
 
         this.texture.clear();
         var player = this.scene.player;
-
-        
-        if (currSegment.curve == ROAD.CURVE.EASY || currSegment.curve == ROAD.CURVE.MEDIUM || currSegment.curve == ROAD.CURVE.HARD) {
-            player.x = player.x + (player.speedPercent * currSegment.curve * 0.01);
-        }
+        var player_segment = this.getSegment(player.z);
+            
+        player.x = player.x + (player.speedPercent * player_segment.curve * (-0.01));
 
         this.texture.draw(player.sprite, player.screen.x, player.screen.y);
 	}
