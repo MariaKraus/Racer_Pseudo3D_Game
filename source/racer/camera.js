@@ -25,6 +25,7 @@ class Camera
      * Updates camera position to follow the player
      */
     update() {
+        
         var player = this.scene.player;
         var circuit = this.scene.circuit;
 

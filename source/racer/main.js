@@ -9,7 +9,6 @@ const STATE_INIT = 1;
 const STATE_RESTART = 2;
 const STATE_PLAY = 3;
 const STATE_GAMEOVER = 4;
-
 //----------------------------------------------------------------------
 //Global Variables
 //---------------------------------------------------------------------
@@ -21,29 +20,27 @@ var SPRITES = {
     yellow_house:   {x: 5, y: 5, w:450, h:500}
 }
 
-
-
-
-
 // coordinates of the screen center
 var SCREEN_CX = SCREEN_W/2;
 var SCREEN_CY = SCREEN_H/2;
 
 // current state
 var state = STATE_INIT;
-       // our canvas...
 
+var keys;
 
 screen.onresize = screen.onload = function() {
     SCREEN_W  = screen.availWidth;
     SCREEN_H = screen.availHeight;
 }
 
+
 class MainScene extends Phaser.Scene
 {
     constructor() {
         super({key: 'SceneMain'});
         //canvas = document.getElementById('canvas');       // our canvas...      
+     
     }
 
     /**
@@ -66,10 +63,10 @@ class MainScene extends Phaser.Scene
         }
         this.images[0].onerror=function(){alert(img1.src+' failed to load.');};
         this.images[0].scr = '../assets/img_back.png';
-
-
-
         */
+        this.load.image('virus', 'source/assets/virus0.png');
+
+
         this.load.image('housesLeft', 'source/assets/house1_L1.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
@@ -78,6 +75,8 @@ class MainScene extends Phaser.Scene
      * Creates all objects
      */
     create() {
+        this.scale.lockOrientation('landscape');
+
         		// backgrounds
 		// backgrounds
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
@@ -85,13 +84,16 @@ class MainScene extends Phaser.Scene
 
         // array of sprites that will be "manually" drawn on a rendering texture 
 		// => they must be invisible after creation
-		
+		/*
         this.canvas = document.getElementById('canvas');
         this.ctx = canvas.getContext('2d'); // ...and its drawing context
         this.ctx.canvas.width  = SCREEN_W;
         this.ctx.canvas.height = SCREEN_H;  
+        */
 
-        this.sprites = [];
+        this.sprites = [
+            this.add.image(0, 0, 'virus').setVisible(false)
+        ];
 
         //settings instance
         this.circuit = new Circuit(this);
@@ -101,15 +103,18 @@ class MainScene extends Phaser.Scene
         
 
         //listener to pause the game
-        this.input.keyboard.on('keydown-P', function() {
-            console.log("Game is paused. Press [P] to resume.");
-            this.settings.txtPause.text = "[P] Resume"
+        this.input.keyboard.on('keydown-SPACE', function() {
+            this.settings.txtPause.text = "SPACE Resume"
             this.scene.pause();
             this.scene.launch('ScenePause');
         }, this);
 
+        keys = this.input.keyboard.addKeys({
+            left: 'left',
+            right: 'right'
+        });
+
         this.events.on('resume', function() {
-            console.log("Game is resumed. Press [P] to pause.");
             this.settings.show();
         }, this);
     }
@@ -117,12 +122,13 @@ class MainScene extends Phaser.Scene
     /**
      * Main Game Loop
      */
-    update(time,delta) {
+    update(time, delta) {
         switch(state) {
             case STATE_INIT:
                 console.log("Init game.");
                 state = STATE_RESTART;
                 this.camera.init();
+                this.player.init();
                 break;
             case STATE_RESTART:
                 console.log("Restart game.");
@@ -132,12 +138,12 @@ class MainScene extends Phaser.Scene
                 break;
             case STATE_PLAY:
                 console.log("Play game.");
-
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
-                this.player.update(dt);
-                this.camera.update();
+                this.player.update(dt, keys);
                 this.circuit.render3D();
+                this.camera.update();
+
                 break;
             case STATE_GAMEOVER:
                 console.log("Play game.");
@@ -154,7 +160,7 @@ class PauseScene extends Phaser.Scene
     }
 
     create(){ 
-        this.input.keyboard.on('keydown-P', function() {
+        this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
             this.scene.stop();
         }, this);

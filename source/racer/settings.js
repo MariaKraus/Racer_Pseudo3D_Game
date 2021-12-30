@@ -12,6 +12,6 @@ class Settings
 	* Shows all settings.
 	*/	
 	show(){
-		this.txtPause.text = "[P] Pause";
+		this.txtPause.text = "SPACE Pause";
 	}
 }
