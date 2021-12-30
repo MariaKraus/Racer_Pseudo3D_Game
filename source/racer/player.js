@@ -18,6 +18,10 @@ class Player
         this.maxSpeed = (scene.circuit.segmentLength) / (1/60);
 
         this.speed = 0;
+
+        this.speedPercent = 0;
+
+        this.dv = 0;
     }
 
     /**
@@ -27,7 +31,7 @@ class Player
         this.screen.w = this.sprite.width;
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
-        this.screen.y = SCREEN_CY;
+        this.screen.y = SCREEN_H - this.screen.h;
 
          console.log(this.screen.w);
          console.log(this.screen.h);
@@ -49,9 +53,19 @@ class Player
     /**
      * Updates player position
      */
-    update(dt) {
+    update(dt, keys) {
+
+        this.speedPercent  = this.speed/this.maxSpeed;
+        this.dv = dt * 2 * this.speedPercent; 
+
         //Only moves in Z direction right now
         this.z += this.speed * dt;
+        
+        if (keys.left.isDown) {
+            this.x -= this.dv;
+        }
+        if (keys.right.isDown) {
+            this.x += this.dv;
+        }
     }
-
 }

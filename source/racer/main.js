@@ -27,6 +27,8 @@ var SCREEN_CY = SCREEN_H/2;
 // current state
 var state = STATE_INIT;
 
+var keys;
+
 screen.onresize = screen.onload = function() {
     SCREEN_W  = screen.availWidth;
     SCREEN_H = screen.availHeight;
@@ -97,15 +99,18 @@ class MainScene extends Phaser.Scene
         
 
         //listener to pause the game
-        this.input.keyboard.on('keydown-P', function() {
-            console.log("Game is paused. Press [P] to resume.");
-            this.settings.txtPause.text = "[P] Resume"
+        this.input.keyboard.on('keydown-SPACE', function() {
+            this.settings.txtPause.text = "SPACE Resume"
             this.scene.pause();
             this.scene.launch('ScenePause');
         }, this);
 
+        keys = this.input.keyboard.addKeys({
+            left: 'left',
+            right: 'right'
+        });
+
         this.events.on('resume', function() {
-            console.log("Game is resumed. Press [P] to pause.");
             this.settings.show();
         }, this);
     }
@@ -113,7 +118,7 @@ class MainScene extends Phaser.Scene
     /**
      * Main Game Loop
      */
-    update(time,delta) {
+    update(time, delta) {
         switch(state) {
             case STATE_INIT:
                 console.log("Init game.");
@@ -129,12 +134,12 @@ class MainScene extends Phaser.Scene
                 break;
             case STATE_PLAY:
                 console.log("Play game.");
-
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
-                this.player.update(dt);
-                this.camera.update();
+                this.player.update(dt, keys);
                 this.circuit.render3D();
+                this.camera.update();
+
                 break;
             case STATE_GAMEOVER:
                 console.log("Play game.");
@@ -151,7 +156,7 @@ class PauseScene extends Phaser.Scene
     }
 
     create(){ 
-        this.input.keyboard.on('keydown-P', function() {
+        this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
             this.scene.stop();
         }, this);
