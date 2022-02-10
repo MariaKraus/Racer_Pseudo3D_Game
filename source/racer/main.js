@@ -137,7 +137,6 @@ class MainScene extends Phaser.Scene
                 this.player.restart();
                 break;
             case STATE_PLAY:
-                console.log("Play game.");
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
                 this.player.update(dt, keys);

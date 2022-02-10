@@ -1,6 +1,6 @@
 
 var ROAD = {
-    LENGTH: { NONE: 0, SHORT:  50, MEDIUM:  75, LONG:  100 },
+    LENGTH: { NONE: 0, SHORT:  20, MEDIUM:  40, LONG:  80 },
     CURVE:  { NONE: 0, EASY:    2, MEDIUM:   4, HARD:    6 },
     HILL:   { NONE: 0, SMALL:  20, MEDIUM: 40, HIGH: 60 },
 };
@@ -23,8 +23,8 @@ class Circuit
 		this.texture = scene.add.renderTexture(0, 0, SCREEN_W, SCREEN_H);
 
         this.segments = [];
-        this.segmentLength = 100;
-        this.roadWidth = (SCREEN_W > SCREEN_H)? (0.4 * SCREEN_W) : (0.4 * SCREEN_H );
+        this.segmentLength = 80;
+        this.roadWidth = (SCREEN_W > SCREEN_H)? (0.7 * SCREEN_W) : (0.7 * SCREEN_H );
 
         SPRITES.SCALE = 0.3 * (1/this.roadWidth);
 
@@ -59,36 +59,36 @@ class Circuit
 
         //straight road
         this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.NONE, ROAD.LENGTH.NONE, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.EASY, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.NONE, ROAD.HILL.HIGH);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.SMALL);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.MEDIUM, -ROAD.HILL.SMALL);
         this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.NONE, ROAD.LENGTH.LONG, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, ROAD.CURVE.EASY, ROAD.HILL.HIGH);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, -ROAD.HILL.HIGH);
         this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
         this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.SMALL);
+        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, -ROAD.HILL.MEDIUM);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM);
         this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
         this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
         this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.SMALL);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.NONE, ROAD.HILL.HIGH);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, -ROAD.HILL.SMALL);
+        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.HIGH);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.MEDIUM, ROAD.HILL.SMALL);
         this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
         this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
         this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, -ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM);
+        this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.MEDIUM);
+        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, -ROAD.HILL.MEDIUM);
         this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE);
-        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
+        this.createSection(ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.MEDIUM, ROAD.HILL.SMALL);
         this.createSection(ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE);
 
     }
@@ -98,7 +98,7 @@ class Circuit
      * nSegments = number of segments that make up this section
      */
     createSection(in_s, stay_s, out_s, curve, height) {
-        var y_old = (this.total_segments == 0) ? 0 : this.segments[this.total_segments - 1].point.world.y;
+        var y_old = (this.segments.length == 0) ? 0 : this.segments[this.segments.length - 1].point.world.y;
         var y_new = y_old +  this.segmentLength * height;
         var total = in_s + stay_s + out_s;
 
@@ -108,10 +108,10 @@ class Circuit
 
         }
         for (var i = 0; i < stay_s; i++) {
-            this.createSegment(curve, this.calc_in_out((1/total) * height));
+            this.createSegment(curve, this.calc_in_out(y_old, y_new, (i + in_s)/total));
         }
         for (var i = 0; i < out_s; i++) {
-            this.createSegment(this.calc_out(curve, 0, i/out_s, this.calc_in_out(y_old, y_new, (i + stay_s + in_s)/total)));
+            this.createSegment(this.calc_out(curve, 0, i/out_s), this.calc_in_out(y_old, y_new, (i + stay_s + in_s)/total));
         }
     }
 
@@ -142,10 +142,6 @@ class Circuit
             curve: curve,
             sprites : []
         });
-        if (n == 275) {
-            console.log(height);
-            console.log(this.segments[n]);
-        }
 
         if (this.counter > this.visible_segments) {
             mod = 30;
@@ -256,7 +252,14 @@ class Circuit
 	*/	
 	render3D(){
 		this.graphics.clear();
-        
+
+        this.texture.clear();
+        var player = this.scene.player;
+        var player_segment = this.getSegment(player.z);
+        player.x = player.x + (player.speedPercent * player_segment.curve * (-0.02));
+        this.texture.draw(player.sprite, player.screen.x, player.screen.y);
+
+
         //define the clipping bottom line to render only segments above it.
         var clipBottomLine = SCREEN_H;
 
@@ -283,7 +286,7 @@ class Circuit
             var currSegment = this.segments[currIndex];
 
             // project the segment to the screen space
-	        this.project3D(currSegment.point, camera.x - x, camera.y, camera.z, camera.distToPlane);
+	        this.project3D(currSegment.point, camera.x - x, camera.y + player_segment.point.world.y, camera.z, camera.distToPlane);
 
             x = x + dx;
             dx = dx + currSegment.curve;
@@ -300,8 +303,8 @@ class Circuit
                 var p2 = currSegment.point.screen;
 
 				this.drawSegment(
-					p1.x, p1.y, p1.w, p1.h,
-					p2.x, p2.y, p2.w, p2.h,
+					p1.x, p1.y, p1.w,
+					p2.x, p2.y, p2.w,
 					currSegment.color
                     
 				);
@@ -343,13 +346,7 @@ class Circuit
             }
         }
 
-        this.texture.clear();
-        var player = this.scene.player;
-        var player_segment = this.getSegment(player.z);
-            
-        player.x = player.x + (player.speedPercent * player_segment.curve * (-0.01));
 
-        this.texture.draw(player.sprite, player.screen.x, player.screen.y);
 	}
 
     /**
@@ -379,7 +376,7 @@ class Circuit
      * @param {*} w2 
      * @param {*} color 
      */
-     drawSegment(x1, y1, w1, h1, x2, y2, w2, h2, color) {
+     drawSegment(x1, y1, w1, x2, y2, w2, color) {
 
         /*
         this.ctx.fillStyle = color.grass;
