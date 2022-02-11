@@ -27,6 +27,8 @@ var SCREEN_CY = SCREEN_H/2;
 // current state
 var state = STATE_INIT;
 
+var IS_TOUCH = false;
+
 var keys;
 
 screen.onresize = screen.onload = function() {
@@ -75,7 +77,20 @@ class MainScene extends Phaser.Scene
      * Creates all objects
      */
     create() {
-        this.scale.lockOrientation('landscape');
+        // Check touch input
+	window.addEventListener('touchstart', function()
+	{			
+		IS_TOUCH	= true;
+	});
+
+        //window.addEventListener('resize', resize);
+        /*window.addEventListener('resize', function (event) {
+
+            game.scale.resize(window.innerWidth, window.innerHeight);
+            
+            }, false);
+
+        this.scale.lockOrientation('landscape');*/
 
         		// backgrounds
 		// backgrounds
@@ -171,6 +186,12 @@ var config = {
     type: Phaser.AUTO,
     width: SCREEN_W,
     height: SCREEN_H,
+    /*physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false,
+        }
+    },*/
 
     scale: {
         mode: Phaser.Scale.FIT,
@@ -179,6 +200,7 @@ var config = {
 
     scene: [MainScene, PauseScene]
 };
+
 
 // game instance
 var game = new Phaser.Game(config);
