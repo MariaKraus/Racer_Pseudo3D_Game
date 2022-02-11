@@ -56,10 +56,10 @@ class Player
         this.z += this.speed * dt;
         
         if (keys.left.isDown) {
-            this.x -= this.dv *1.5;
+            this.x -= this.dv *1.8;
         }
         if (keys.right.isDown) {
-            this.x += this.dv *1.5;
+            this.x += this.dv *1.8;
         }
     }
 }

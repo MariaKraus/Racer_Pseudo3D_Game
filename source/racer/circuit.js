@@ -23,7 +23,7 @@ class Circuit
 		this.texture = scene.add.renderTexture(0, 0, SCREEN_W, SCREEN_H);
 
         this.segments = [];
-        this.segmentLength = 80;
+        this.segmentLength = 200;
         this.roadWidth = (SCREEN_W > SCREEN_H)? (0.7 * SCREEN_W) : (0.7 * SCREEN_H );
 
         SPRITES.SCALE = 0.3 * (1/this.roadWidth);
