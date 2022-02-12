@@ -1,4 +1,8 @@
 
+var gyro_x = 0;
+
+var gyro_run = false;
+
 class Player
 {
     constructor(scene) {
@@ -21,6 +25,7 @@ class Player
         this.speedPercent = 0;
 
         this.dv = 0;
+
     }
 
     /**
@@ -31,9 +36,15 @@ class Player
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
         this.screen.y = SCREEN_H - this.screen.h;     
-        if (this.scene.IS_TOUCH) {
+    }
+
+    startGyro() {
             gyro.frequency = 10;
-        }
+         // start gyroscope detection
+            gyro.startTracking(function(o) {
+                            // updating player velocity
+            gyro_x += o.gamma/20;
+            });	
     }
 
     /**
@@ -50,25 +61,27 @@ class Player
      * Updates player position
      */
     update(dt, keys) {
+        if ((!gyro_run) && (IS_TOUCH)) {
+            this.startGyro();
+            gyro_run = true;
+        }
 
         this.speedPercent  = this.speed/this.maxSpeed;
         this.dv = dt * 2 * this.speedPercent; 
 
         //Only moves in Z direction right now
         this.z += this.speed * dt;
-        if (!this.scene.IS_TOUCH) {
+        if (IS_TOUCH) {
+            this.x += gyro_x;
+        	
+        }else {
         if (keys.left.isDown) {
             this.x -= this.dv *1.8;
         }
         if (keys.right.isDown) {
             this.x += this.dv *1.8;
         }
-    }else {
-		// start gyroscope detection
-        gyro.startTracking(function(o) {
-               // updating player velocity
-            this.x += o.gamma/20;
-        });	
     }
+
     }
 }

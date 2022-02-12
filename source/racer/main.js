@@ -31,11 +31,6 @@ var IS_TOUCH = false;
 
 var keys;
 
-screen.onresize = screen.onload = function() {
-    SCREEN_W  = screen.availWidth;
-    SCREEN_H = screen.availHeight;
-}
-
 
 class MainScene extends Phaser.Scene
 {
@@ -72,25 +67,17 @@ class MainScene extends Phaser.Scene
         this.load.image('housesLeft', 'source/assets/house1_L1.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
-    
+    onResize() {
+        this.scale.displaySize.setAspectRatio( SCREEN_W/SCREEN_H );
+        this.scale.refresh();
+        this.create();
+    }
     /**
      * Creates all objects
      */
     create() {
-        // Check touch input
-	window.addEventListener('touchstart', function()
-	{			
-		IS_TOUCH	= true;
-	});
-
-        //window.addEventListener('resize', resize);
-        /*window.addEventListener('resize', function (event) {
-
-            game.scale.resize(window.innerWidth, window.innerHeight);
-            
-            }, false);
-
-        this.scale.lockOrientation('landscape');*/
+    
+        //this.scale.lockOrientation('landscape');
 
         		// backgrounds
 		// backgrounds
@@ -115,6 +102,23 @@ class MainScene extends Phaser.Scene
         this.settings = new Settings(this);
         this.camera = new Camera(this);
         this.player = new Player(this);
+            // Check touch input
+	window.addEventListener('touchstart', function()
+	{			
+		IS_TOUCH	= true;
+	});
+
+
+        //window.addEventListener('resize', resize);
+        window.addEventListener('resize', function (event) {
+            state = STATE_INIT;
+            SCREEN_W = screen.availWidth;
+            SCREEN_H = screen.availHeigth;
+            SCREEN_CX = SCREEN_W/2;
+            SCREEN_CY = SCREEN_H/2;
+            resize();
+            }, false);
+
         
 
         //listener to pause the game
@@ -179,6 +183,10 @@ class PauseScene extends Phaser.Scene
             this.scene.stop();
         }, this);
     }
+}
+
+function resize() {
+    //game.scene.scenes[0].onResize();
 }
 
 //game configuration
