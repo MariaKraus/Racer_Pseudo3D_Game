@@ -72,7 +72,7 @@ class Player
         //Only moves in Z direction right now
         this.z += this.speed * dt;
         if (IS_TOUCH) {
-            this.x += gyro_x;
+            this.x += gyro_x * this.dv;
         	
         }else {
         if (keys.left.isDown) {
