@@ -15,6 +15,9 @@ class Player
         this.z = 0;
         this.w = this.sprite.width;
 
+        this.max_x = SCREEN_W;
+        this.min_x = -SCREEN_W;
+
         this.screen = {x:0, y:0, w:0, h:0};
 
         //max_speed => player can't be faster than rendering
@@ -73,15 +76,27 @@ class Player
         this.z += this.speed * dt;
         if (IS_TOUCH) {
             this.x += gyro_x * this.dv;
+            this.x = this.getBorder(this.x);
         	
-        }else {
-        if (keys.left.isDown) {
-            this.x -= this.dv *1.8;
-        }
-        if (keys.right.isDown) {
-            this.x += this.dv *1.8;
-        }
+        } else {
+            if (keys.left.isDown) {
+                this.x -= this.dv *1.8;
+                this.x = this.getBorder(this.x);
+            }
+            if (keys.right.isDown) {
+                this.x += this.dv *1.8;
+                this.x = this.getBorder(this.x);
+            }
+        }   
     }
 
+    getBorder(x_value) {
+        if (x_value > this.max_x) {
+            return this.max_x;
+        } else if (x_value < this.min_x){
+            return this.min_X;
+        } else {
+            return x_value;
+        }
     }
 }
