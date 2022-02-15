@@ -13,8 +13,8 @@ const STATE_GAMEOVER = 4;
 //Global Variables
 //---------------------------------------------------------------------
 // screen size
-var SCREEN_W = screen.availWidth;
-var SCREEN_H = screen.availHeight;
+var SCREEN_W = (screen.availWidth > screen.availHeight)?screen.availWidth: screen.availHeight;
+var SCREEN_H = (screen.availWidth > screen.availHeight)?screen.availHeight: screen.availWidth;
 
 var SPRITES = {
     yellow_house:   {x: 5, y: 5, w:450, h:500}
@@ -108,17 +108,16 @@ class MainScene extends Phaser.Scene
 		IS_TOUCH	= true;
 	});
 
-    /*
-        //window.addEventListener('resize', resize);
+    
+/*
         window.addEventListener('resize', function (event) {
-            state = STATE_INIT;
             SCREEN_W = screen.availWidth;
-            SCREEN_H = screen.availHeigth;
+            SCREEN_H = screen.availHeight;
             SCREEN_CX = SCREEN_W/2;
             SCREEN_CY = SCREEN_H/2;
-            resize();
-            }, false);
-            */
+           // this.scene.restart('SceneMain');
+            }, this);*/
+    
 
         
 
