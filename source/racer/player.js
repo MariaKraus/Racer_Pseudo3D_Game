@@ -43,7 +43,7 @@ class Player
          // start gyroscope detection
             gyro.startTracking(function(o) {
                             // updating player velocity
-            gyro_x += o.gamma/20;
+            gyro_x += o.beta/200;
             });	
     }
 

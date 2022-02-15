@@ -67,11 +67,11 @@ class MainScene extends Phaser.Scene
         this.load.image('housesLeft', 'source/assets/house1_L1.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
-    onResize() {
+    /*onResize() {
         this.scale.displaySize.setAspectRatio( SCREEN_W/SCREEN_H );
         this.scale.refresh();
         this.create();
-    }
+    }*/
     /**
      * Creates all objects
      */
@@ -108,7 +108,7 @@ class MainScene extends Phaser.Scene
 		IS_TOUCH	= true;
 	});
 
-
+    /*
         //window.addEventListener('resize', resize);
         window.addEventListener('resize', function (event) {
             state = STATE_INIT;
@@ -118,6 +118,7 @@ class MainScene extends Phaser.Scene
             SCREEN_CY = SCREEN_H/2;
             resize();
             }, false);
+            */
 
         
 
@@ -183,10 +184,6 @@ class PauseScene extends Phaser.Scene
             this.scene.stop();
         }, this);
     }
-}
-
-function resize() {
-    //game.scene.scenes[0].onResize();
 }
 
 //game configuration
