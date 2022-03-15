@@ -31,6 +31,8 @@ var IS_TOUCH = false;
 
 var keys;
 
+var isInPortrait;
+
 
 class MainScene extends Phaser.Scene
 {
@@ -200,6 +202,12 @@ var config = {
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        forceOrientation: (true,false),
+        enterIncorrectOrientation: handleIncorrect,
+        leaveIncorrectOrientation: handleCorrect,
+        setScreenSize: true,
+        pageAlignHorizontally: true,
+        pageAlignHorizontally:true
     },
 
     scene: [MainScene, PauseScene]
@@ -208,3 +216,21 @@ var config = {
 
 // game instance
 var game = new Phaser.Game(config);
+
+var isInPortrait = game.scale.isGamePortrait;
+
+function handleIncorrect(){
+    if(!game.device.desktop){
+        document.getElementById("turn").style.display="block";
+    }
+}
+
+function handleCorrect(){
+   if(!game.device.desktop){
+       if(isInPortrait){
+           gameRatio = window.innerWidth/window.innerHeight;		
+           //game.renderer.resize(window.innerWidth, window.innerHeight);	
+       }
+       document.getElementById("turn").style.display="none";
+   }
+}
