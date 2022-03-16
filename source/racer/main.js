@@ -32,6 +32,8 @@ var IS_TOUCH = false;
 var keys;
 
 var isInPortrait;
+var mainScene;
+var pauseScene;
 
 
 class MainScene extends Phaser.Scene
@@ -46,6 +48,7 @@ class MainScene extends Phaser.Scene
      * Loads all assets.
      */
     preload() {
+        mainScene = this.scene;
 
         this.load.image('imgBack', 'source/assets/img_back.png');
         
@@ -84,6 +87,7 @@ class MainScene extends Phaser.Scene
         		// backgrounds
 		// backgrounds
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
+        this.load.image('pause', 'source/assets/pause.png');
        //ctx.drawImage('imgBack', SCREEN_CX, SCREEN_CY);
 
         // array of sprites that will be "manually" drawn on a rendering texture 
@@ -108,36 +112,39 @@ class MainScene extends Phaser.Scene
 	window.addEventListener('touchstart', function()
 	{			
 		IS_TOUCH	= true;
+        this.settings.txtPause.text = "SPACE Resume"
+        this.scene.pause();
+        this.scene.launch('ScenePause');
 	});
 
     
-/*
-        window.addEventListener('resize', function (event) {
-            SCREEN_W = screen.availWidth;
-            SCREEN_H = screen.availHeight;
-            SCREEN_CX = SCREEN_W/2;
-            SCREEN_CY = SCREEN_H/2;
-           // this.scene.restart('SceneMain');
-            }, this);*/
+    
+    window.addEventListener('resize', function (event) {
+        if(event.target.screen.availHeight > event.target.screen.availWidth) {
+            isInPortrait = true;
+            mainScene.pause();
+            mainScene.launch('ScenePause');
+        }
+    }, this);
     
 
         
 
-        //listener to pause the game
-        this.input.keyboard.on('keydown-SPACE', function() {
-            this.settings.txtPause.text = "SPACE Resume"
-            this.scene.pause();
-            this.scene.launch('ScenePause');
-        }, this);
+    //listener to pause the game
+    this.input.keyboard.on('keydown-SPACE', function() {
+        this.settings.txtPause.text = "SPACE Resume"
+        this.scene.pause();
+        this.scene.launch('ScenePause');
+    }, this);
 
-        keys = this.input.keyboard.addKeys({
-            left: 'left',
-            right: 'right'
-        });
+    keys = this.input.keyboard.addKeys({
+        left: 'left',
+        right: 'right'
+    });
 
-        this.events.on('resume', function() {
-            this.settings.show();
-        }, this);
+    this.events.on('resume', function() {
+        this.settings.show();
+    }, this);
     }
 
     /**
@@ -178,13 +185,31 @@ class PauseScene extends Phaser.Scene
     constructor() {
         super({key: 'ScenePause'});  
     }
+    preload(){
+        pauseScene = this.scene;
+        this.load.image('imgBack', 'source/assets/img_back.png');
+        this.load.image('start', 'source/assets/right.png');
+
+        this.load.image('star', 'source/assets/star.png');
+    }
 
     create(){ 
+        this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
+        this.add.image(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
+
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
             this.scene.stop();
         }, this);
+        window.addEventListener('resize', function (event) {
+            if(event.target.screen.availHeight < event.target.screen.availWidth) {
+                isInPortrait = false;
+                pauseScene.pause();
+                pauseScene.resume('SceneMain');
+            }
+        }, this);
     }
+
 }
 
 //game configuration
@@ -192,6 +217,7 @@ var config = {
     type: Phaser.AUTO,
     width: SCREEN_W,
     height: SCREEN_H,
+    //fullscreenTarget: document.getElementById("wrapper"),
     /*physics: {
         default: 'arcade',
         arcade: {
@@ -200,7 +226,7 @@ var config = {
     },*/
 
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.NO_SCALE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         forceOrientation: (true,false),
         enterIncorrectOrientation: handleIncorrect,
@@ -217,7 +243,21 @@ var config = {
 // game instance
 var game = new Phaser.Game(config);
 
-var isInPortrait = game.scale.isGamePortrait;
+
+function displayOnPortrait(event){
+
+    if(!game.device.desktop){
+        if(event.srcElement.innerHeight > event.srcElement.innerWidth) {
+            isInPortrait = true;
+        }
+        else{
+            //document.getElementById("bg").style.display="none";
+            //document.getElementById("game").style.display="block";
+        }
+    }
+
+}
+
 
 function handleIncorrect(){
     if(!game.device.desktop){

@@ -310,7 +310,7 @@ class Circuit
         var player_segment = this.getSegment(player.z);
         player.x = player.x + (player.speedPercent * player_segment.curve * (-0.02));
         this.texture.draw(player.sprite, player.screen.x, player.screen.y);
-        console.log(player_segment);
+        //console.log(player_segment);
 
         //define the clipping bottom line to render only segments above it.
         var clipBottomLine = SCREEN_H;
