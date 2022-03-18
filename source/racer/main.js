@@ -193,13 +193,16 @@ class PauseScene extends Phaser.Scene
         pauseScene = this.scene;
         this.load.image('imgBack', 'source/assets/img_back.png');
         this.load.image('start', 'source/assets/right.png');
-
         this.load.image('star', 'source/assets/star.png');
+        this.load.image('title', 'source/assets/title.png');
     }
 
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-        this.add.image(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
+        var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
+        startSprite.angle = 90;
+        var startSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
+        startSprite.angle = 90;
 
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
