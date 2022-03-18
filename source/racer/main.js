@@ -51,6 +51,7 @@ class MainScene extends Phaser.Scene
         mainScene = this.scene;
 
         this.load.image('imgBack', 'source/assets/img_back.png');
+        this.load.image('pause', 'source/assets/pause.png');
         
         //this.load.setPath('assets/sprites');
         /*this.load.spritesheet([
@@ -66,7 +67,7 @@ class MainScene extends Phaser.Scene
         this.images[0].onerror=function(){alert(img1.src+' failed to load.');};
         this.images[0].scr = '../assets/img_back.png';
         */
-        this.load.image('virus', 'source/assets/virus0.png');
+        this.load.image('car', 'source/assets/car.png');
 
 
         this.load.image('housesLeft', 'source/assets/house1_L1.png');
@@ -87,7 +88,7 @@ class MainScene extends Phaser.Scene
         		// backgrounds
 		// backgrounds
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-        this.load.image('pause', 'source/assets/pause.png');
+
        //ctx.drawImage('imgBack', SCREEN_CX, SCREEN_CY);
 
         // array of sprites that will be "manually" drawn on a rendering texture 
