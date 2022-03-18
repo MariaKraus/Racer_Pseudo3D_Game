@@ -113,7 +113,6 @@ class MainScene extends Phaser.Scene
 	window.addEventListener('touchstart', function()
 	{			
 		IS_TOUCH	= true;
-        this.settings.txtPause.text = "SPACE Resume"
         this.scene.pause();
         this.scene.launch('ScenePause');
 	});
@@ -212,7 +211,6 @@ class PauseScene extends Phaser.Scene
         window.addEventListener('resize', function (event) {
             if(event.target.screen.availHeight < event.target.screen.availWidth) {
                 isInPortrait = false;
-                this.sprBack.setVisible(false);
                 startSprite.setVisible(false);
                 titleSprite.setVisible(false);
                 pauseScene.pause();
