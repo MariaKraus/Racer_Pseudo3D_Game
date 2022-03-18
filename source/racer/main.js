@@ -100,7 +100,7 @@ class MainScene extends Phaser.Scene
         */
 
         this.sprites = [
-            this.add.image(0, 0, 'virus').setVisible(false)
+            this.add.image(0, 0, 'car').setVisible(false)
         ];
 
         //settings instance
@@ -201,8 +201,8 @@ class PauseScene extends Phaser.Scene
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
         var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
         startSprite.angle = 90;
-        var startSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
-        startSprite.angle = 90;
+        var titleSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
+        titleSprite.angle = 90;
 
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
@@ -211,6 +211,8 @@ class PauseScene extends Phaser.Scene
         window.addEventListener('resize', function (event) {
             if(event.target.screen.availHeight < event.target.screen.availWidth) {
                 isInPortrait = false;
+                startSprite.setVisible(false);
+                titleSprite.setVisible(false);
                 pauseScene.pause();
                 pauseScene.resume('SceneMain');
             }
