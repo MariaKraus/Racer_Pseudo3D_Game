@@ -155,6 +155,10 @@ class MainScene extends Phaser.Scene
             case STATE_INIT:
                 console.log("Init game.");
                 state = STATE_RESTART;
+                if (screen.availHeight> screen.availWidth) {
+                    this.scene.pause();
+                    this.scene.launch('ScenePause');
+                }
                 this.camera.init();
                 this.player.init();
                 break;
@@ -245,17 +249,11 @@ var game = new Phaser.Game(config);
 
 
 function displayOnPortrait(event){
-
-    if(!game.device.desktop){
-        if(event.srcElement.innerHeight > event.srcElement.innerWidth) {
-            isInPortrait = true;
-        }
-        else{
-            //document.getElementById("bg").style.display="none";
-            //document.getElementById("game").style.display="block";
-        }
+    if(event.srcElement.innerHeight > event.srcElement.innerWidth) {
+        isInPortrait = true;
+    } else{
+        isInPortrait = false;
     }
-
 }
 
 
