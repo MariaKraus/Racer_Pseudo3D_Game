@@ -200,9 +200,9 @@ class PauseScene extends Phaser.Scene
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
         var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
-        startSprite.angle = 90;
         var titleSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
         titleSprite.angle = 90;
+        titleSprite.displayWidth = SCREEN_H;
 
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.resume('SceneMain');
@@ -211,6 +211,7 @@ class PauseScene extends Phaser.Scene
         window.addEventListener('resize', function (event) {
             if(event.target.screen.availHeight < event.target.screen.availWidth) {
                 isInPortrait = false;
+                this.sprBack.setVisible(false);
                 startSprite.setVisible(false);
                 titleSprite.setVisible(false);
                 pauseScene.pause();
