@@ -189,36 +189,52 @@ class PauseScene extends Phaser.Scene
     constructor() {
         super({key: 'ScenePause'});  
     }
+
     preload(){
         pauseScene = this.scene;
         this.load.image('imgBack', 'source/assets/img_back.png');
         this.load.image('start', 'source/assets/right.png');
         this.load.image('star', 'source/assets/star.png');
         this.load.image('title', 'source/assets/title.png');
+        this.load.image('turn_mobile', 'source/assets/turn_mobile.png');
     }
 
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-        var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true)
-        var titleSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
-        titleSprite.angle = 90;
-        titleSprite.displayWidth = SCREEN_H;
-
-        this.input.keyboard.on('keydown-SPACE', function() {
-            this.scene.resume('SceneMain');
-            this.scene.stop();
-        }, this);
-        window.addEventListener('resize', function (event) {
-            if(event.target.screen.availHeight < event.target.screen.availWidth) {
-                isInPortrait = false;
+        //Start button
+        var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
+        startSprite.setInteractive();
+        startSprite.on('pointerdown', () => {
+            if(screen.availHeight < screen.availWidth) {
+                //in landscape
                 startSprite.setVisible(false);
                 titleSprite.setVisible(false);
-                pauseScene.pause();
-                pauseScene.resume('SceneMain');
+                this.scene.resume('SceneMain');
+                this.scene.stop();
+            } else {
+                turnMobileSprite.setVisible(true);
+            }
+        });
+        //title
+        var titleSprite = this.add.sprite(SCREEN_CX * (1/4) , SCREEN_CY, 'title').setVisible(true)
+        titleSprite.displayWidth = SCREEN_H;
+        
+        //information turn mobile
+        var turnMobileSprite = this.add.sprite(SCREEN_H, SCREEN_W, 'turn_mobile').setVisible(false);
+
+        window.addEventListener('resize', function (event) {
+            if(event.target.screen.availHeight < event.target.screen.availWidth) {
+                //in landscape
+                startSprite.angle = 90;
+                titleSprite.angle = 90;
+            } else {
+                //in portrait mode
+                startSprite.angle = 0;
+                titleSprite.angle = 0;
+                turnMobileSprite.setVisible(false);
             }
         }, this);
     }
-
 }
 
 //game configuration
