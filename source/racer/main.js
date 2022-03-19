@@ -133,6 +133,7 @@ class MainScene extends Phaser.Scene
         this.scene.launch('ScenePause');
     }, this);
 
+    //steering on computer
     keys = this.input.keyboard.addKeys({
         left: 'left',
         right: 'right'
@@ -212,7 +213,7 @@ class PauseScene extends Phaser.Scene
             }
         });
         //title
-        var titleSprite = this.add.sprite(SCREEN_CX * (1/4) , SCREEN_CY, 'title').setVisible(true)
+        var titleSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
         titleSprite.displayWidth = SCREEN_H;
         
         //information turn mobile
@@ -220,15 +221,17 @@ class PauseScene extends Phaser.Scene
 
         if(screen.availHeight < screen.availWidth) {
             //in landscape
-            startSprite.angle = 90;
-            titleSprite.angle = 90;
-        } else {
-            //in portrait mode
             startSprite.angle = 0;
             titleSprite.angle = 0;
-            turnMobileSprite.setVisible(false);
+        } else {
+            //in portrait mode
+            startSprite.angle = 90;
+            titleSprite.angle = 90;
+            turnMobileSprite.setVisible(true);
         }
 
+        /*
+        //change the pause scene on orientation change
         window.addEventListener('resize', function () {
             if(screen.availHeight < screen.availWidth) {
                 //in landscape
@@ -241,6 +244,7 @@ class PauseScene extends Phaser.Scene
                 turnMobileSprite.setVisible(false);
             }
         }, this);
+        */
     }
 }
 
@@ -275,7 +279,7 @@ var config = {
 // game instance
 var game = new Phaser.Game(config);
 
-
+/*
 function displayOnPortrait(event){
     if(event.srcElement.innerHeight > event.srcElement.innerWidth) {
         isInPortrait = true;
@@ -299,4 +303,4 @@ function handleCorrect(){
        }
        document.getElementById("turn").style.display="none";
    }
-}
+}*()
