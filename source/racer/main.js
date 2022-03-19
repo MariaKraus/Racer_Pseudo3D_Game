@@ -132,7 +132,6 @@ class MainScene extends Phaser.Scene
 
     //listener to pause the game
     this.input.keyboard.on('keydown-SPACE', function() {
-        this.settings.txtPause.text = "SPACE Resume"
         this.scene.pause();
         this.scene.launch('ScenePause');
     }, this);
@@ -203,26 +202,31 @@ class PauseScene extends Phaser.Scene
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
         //Start button
-        var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
-        startSprite.setInteractive();
-        startSprite.on('pointerdown', () => this.start(), this);
+        this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
+        this.startSprite.setInteractive();
+        this.startSprite.on('pointerdown', () => this.start(), this);
         //title
-        var titleSprite = this.add.sprite(SCREEN_CX + SCREEN_CX*(3/4) , SCREEN_CY - SCREEN_CY*(3/4), 'title').setVisible(true)
-        titleSprite.displayWidth = SCREEN_H;
+        this.titleSprite = this.add.sprite(SCREEN_CX + SCREEN_CX*(3/4) , SCREEN_CY - SCREEN_CY*(3/4), 'title').setVisible(true)
+        this.titleSprite.displayWidth = SCREEN_H;
         
         //information turn mobile
-        var turnMobileSprite = this.add.sprite(SCREEN_H, SCREEN_W, 'turn_mobile').setVisible(false);
+        this.turnMobileSprite = this.add.sprite(SCREEN_H, SCREEN_W, 'turn_mobile').setVisible(false);
 
         if(screen.availHeight < screen.availWidth) {
             //in landscape
-            startSprite.angle = 0;
-            titleSprite.angle = 0;
+            this.startSprite.angle = 0;
+            this.titleSprite.angle = 0;
         } else {
             //in portrait mode
-            startSprite.angle = 90;
-            titleSprite.angle = 90;
-            turnMobileSprite.setVisible(true);
+            this.startSprite.angle = 90;
+            this.titleSprite.angle = 90;
+            this.turnMobileSprite.setVisible(true);
         }
+            //listener to pause the game
+        this.input.keyboard.on('keydown-SPACE', function() {
+            this.scene.resume('SceneMain');
+            this.scene.stop();
+        }, this);
 
         /*
         //change the pause scene on orientation change
@@ -241,15 +245,15 @@ class PauseScene extends Phaser.Scene
         */
     }
     start() {
-        if(screen.availHeight < screen.availWidth) {
+        //if(screen.availHeight < screen.availWidth) {
             //in landscape
-            startSprite.setVisible(false);
-            titleSprite.setVisible(false);
+            this.startSprite.setVisible(false);
+            this.titleSprite.setVisible(false);
             this.scene.resume('SceneMain');
             this.scene.stop();
-        } else {
-            turnMobileSprite.setVisible(true);
-        }
+        //} else {
+         //   turnMobileSprite.setVisible(true);
+        //}
     }
 
 }
