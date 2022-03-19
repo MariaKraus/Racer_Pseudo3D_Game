@@ -100,8 +100,12 @@ class MainScene extends Phaser.Scene
         this.ctx.canvas.height = SCREEN_H;  
         */
 
+        this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
+        this.playerSprite.displayWidth = SCREEN_W * (1/8);
+        //scale evenly
+        this.playerSprite.scaleY = this.playerSprite.scaleX;
         this.sprites = [
-            this.add.image(0, 0, 'car').setVisible(false).scale(SCREEN_W/8),
+            this.add.sprite(0, 0, 'car').setVisible(false),
         ];
 
         //settings instance
@@ -201,19 +205,9 @@ class PauseScene extends Phaser.Scene
         //Start button
         var startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
         startSprite.setInteractive();
-        startSprite.on('pointerdown', () => {
-            if(screen.availHeight < screen.availWidth) {
-                //in landscape
-                startSprite.setVisible(false);
-                titleSprite.setVisible(false);
-                this.scene.resume('SceneMain');
-                this.scene.stop();
-            } else {
-                turnMobileSprite.setVisible(true);
-            }
-        });
+        startSprite.on('pointerdown', () => this.start(), this);
         //title
-        var titleSprite = this.add.sprite(SCREEN_CX * (3/4) , SCREEN_CY, 'title').setVisible(true)
+        var titleSprite = this.add.sprite(SCREEN_CX + SCREEN_CX*(3/4) , SCREEN_CY - SCREEN_CY*(3/4), 'title').setVisible(true)
         titleSprite.displayWidth = SCREEN_H;
         
         //information turn mobile
@@ -246,6 +240,18 @@ class PauseScene extends Phaser.Scene
         }, this);
         */
     }
+    start() {
+        if(screen.availHeight < screen.availWidth) {
+            //in landscape
+            startSprite.setVisible(false);
+            titleSprite.setVisible(false);
+            this.scene.resume('SceneMain');
+            this.scene.stop();
+        } else {
+            turnMobileSprite.setVisible(true);
+        }
+    }
+
 }
 
 //game configuration
