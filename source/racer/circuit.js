@@ -308,7 +308,16 @@ class Circuit
         this.texture.clear();
         var player = this.scene.player;
         var player_segment = this.getSegment(player.z);
+        //centrifugal force
         player.x = player.x + (player.speedPercent * player_segment.curve * (-0.02));
+        //if the player is out of road and pavement
+        if ((player.speed != player.maxSpeed/3)
+            && ((player_segment.point.screen.x + player.x > SCREEN_CX + this.roadWidth/2 + SCREEN_CX/10)
+            || (player_segment.point.screen.x + player.x < SCREEN_CX - this.roadWidth/2 - SCREEN_CX/10))) {
+                player.speed = player.maxSpeed/3;
+            } else {
+                player.faster();
+            }
         this.texture.draw(player.sprite, player.screen.x, player.screen.y);
         //console.log(player_segment);
 
@@ -445,7 +454,7 @@ class Circuit
 		this.drawPolygon(x1-w1, y1,	x1+w1, y1, x2+w2, y2, x2-w2, y2, color.road);
 
         var curb_w1 = w1 / 10;
-        var curb_w2 = w2 /10;
+        var curb_w2 = w2 / 10;
         this.drawPolygon(x1-w1-curb_w1, y1, x1-w1, y1, x2-w2, y2, x2-w2-curb_w2, y2, color.curb);
 		this.drawPolygon(x1+w1+curb_w1, y1, x1+w1, y1, x2+w2, y2, x2+w2+curb_w2, y2, color.curb);
 

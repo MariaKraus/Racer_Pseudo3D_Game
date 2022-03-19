@@ -104,7 +104,8 @@ class MainScene extends Phaser.Scene
         */
 
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
-        this.playerSprite.setDisplaySize(SCREEN_W * (1/8), SCREEN_W *(1/8));
+        this.playerSprite.displayWidth = SCREEN_W * 0.1;
+        this.playerSprite.scaleY= this.playerSprite.scaleX;
         //scale evenly
         this.sprites = [
             this.add.sprite(0, 0, 'car').setVisible(false),

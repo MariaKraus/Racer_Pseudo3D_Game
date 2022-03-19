@@ -80,11 +80,11 @@ class Player
         	
         } else {
             if (keys.left.isDown) {
-                this.x -= this.dv *1.8;
+                this.x -= this.dv *1.5;
                 this.x = this.getBorder(this.x);
             }
             if (keys.right.isDown) {
-                this.x += this.dv *1.8;
+                this.x += this.dv *1.5;
                 this.x = this.getBorder(this.x);
             }
         }   
@@ -97,6 +97,12 @@ class Player
             return this.min_X;
         } else {
             return x_value;
+        }
+    }
+
+    faster() {
+        if (this.speed <= this.maxSpeed) {
+            this.speed += this.maxSpeed * 0.05;
         }
     }
 }
