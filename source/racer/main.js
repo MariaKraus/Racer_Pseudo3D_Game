@@ -113,22 +113,18 @@ class MainScene extends Phaser.Scene
 	window.addEventListener('touchstart', function()
 	{			
 		IS_TOUCH	= true;
-        this.scene.pause();
-        this.scene.launch('ScenePause');
+        mainScene.pause();
+        mainScene.launch('ScenePause');
 	});
 
-    
-    
+    //pause game if the screen orientation changes
     window.addEventListener('resize', function (event) {
         if(event.target.screen.availHeight > event.target.screen.availWidth) {
             isInPortrait = true;
             mainScene.pause();
             mainScene.launch('ScenePause');
         }
-    }, this);
-    
-
-        
+    }, this);        
 
     //listener to pause the game
     this.input.keyboard.on('keydown-SPACE', function() {
@@ -222,8 +218,19 @@ class PauseScene extends Phaser.Scene
         //information turn mobile
         var turnMobileSprite = this.add.sprite(SCREEN_H, SCREEN_W, 'turn_mobile').setVisible(false);
 
-        window.addEventListener('resize', function (event) {
-            if(event.target.screen.availHeight < event.target.screen.availWidth) {
+        if(screen.availHeight < screen.availWidth) {
+            //in landscape
+            startSprite.angle = 90;
+            titleSprite.angle = 90;
+        } else {
+            //in portrait mode
+            startSprite.angle = 0;
+            titleSprite.angle = 0;
+            turnMobileSprite.setVisible(false);
+        }
+
+        window.addEventListener('resize', function () {
+            if(screen.availHeight < screen.availWidth) {
                 //in landscape
                 startSprite.angle = 90;
                 titleSprite.angle = 90;
