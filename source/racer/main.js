@@ -29,11 +29,14 @@ var state = STATE_INIT;
 
 var IS_TOUCH = false;
 
+//kees for steering
 var keys;
 
 var isInPortrait;
 var mainScene;
 var pauseScene;
+
+var running = true;
 
 
 class MainScene extends Phaser.Scene
@@ -115,10 +118,25 @@ class MainScene extends Phaser.Scene
         this.player = new Player(this);
             // Check touch input
 	    window.addEventListener('touchstart', function()
-	    {			
-		    IS_TOUCH	= true;
-            mainScene.pause();
-            mainScene.launch('ScenePause');
+	    {	
+            if (running) {
+		        IS_TOUCH	= true;
+                running = false;
+                mainScene.pause();
+                mainScene.launch('ScenePause');
+
+            } else {
+                if(screen.availHeight < screen.availWidth) {
+                    //in landscape
+                    pauseScene.scene.startSprite.setVisible(false);
+                    pauseScene.scene.titleSprite.setVisible(false);
+                    pauseScene.resume('SceneMain');
+                    pauseScene.stop();
+                    running = true;
+              } else {
+                    pauseScene.scene.turnMobileSprite.setVisible(true);
+              }	
+            }
 	    });
 
         //pause game if the screen orientation changes
@@ -230,7 +248,7 @@ class PauseScene extends Phaser.Scene
             this.scene.stop();
         }, this);
 
-
+        /*
 	    window.addEventListener('touchstart', function()
 	    {			
             if(screen.availHeight < screen.availWidth) {
@@ -242,7 +260,7 @@ class PauseScene extends Phaser.Scene
               } else {
                  turnMobileSprite.setVisible(true);
               }
-	    }, this);
+	    }, this);*/
         /*
         //change the pause scene on orientation change
         window.addEventListener('resize', function () {
