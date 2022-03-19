@@ -8,12 +8,12 @@ class Player
     constructor(scene) {
         this.scene = scene;
 
-        this.sprite = this.scene.sprites[0];
+        this.sprite = this.scene.playerSprite;
         //player world coordinates
         this.x = 0;
         this.y = 0;
         this.z = 0;
-        this.w = this.sprite.width;
+        //this.w = this.sprite.width;
 
         this.max_x = SCREEN_W;
         this.min_x = -SCREEN_W;
@@ -35,7 +35,7 @@ class Player
      * 
      */
     init() {
-        this.screen.w = this.sprite.width;
+        //this.screen.w = this.sprite.width;
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
         this.screen.y = SCREEN_H - (this.screen.h/2);     
