@@ -104,9 +104,8 @@ class MainScene extends Phaser.Scene
         */
 
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
-        this.playerSprite.displayWidth = SCREEN_W * (1/8);
+        this.playerSprite.setDisplaySize(SCREEN_W * (1/8), SCREEN_W *(1/8));
         //scale evenly
-        this.playerSprite.scaleY = this.playerSprite.scaleX;
         this.sprites = [
             this.add.sprite(0, 0, 'car').setVisible(false),
         ];
@@ -128,13 +127,13 @@ class MainScene extends Phaser.Scene
             } else {
                 if(screen.availHeight < screen.availWidth) {
                     //in landscape
-                    pauseScene.scene.startSprite.setVisible(false);
+                    //pauseScene.scene.startSprite.setVisible(false);
                     pauseScene.scene.titleSprite.setVisible(false);
                     pauseScene.resume('SceneMain');
                     pauseScene.stop();
                     running = true;
               } else {
-                    pauseScene.scene.turnMobileSprite.setVisible(true);
+                    //pauseScene.scene.turnMobileSprite.setVisible(true);
               }	
             }
 	    });
@@ -145,6 +144,8 @@ class MainScene extends Phaser.Scene
                 isInPortrait = true;
                 mainScene.pause();
                 mainScene.launch('ScenePause');
+            } else {
+                pauseScene.scene.titleSprite.angle = 0;
             }
         }, this);        
 
@@ -220,27 +221,25 @@ class PauseScene extends Phaser.Scene
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
         //Start button
-        this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
-        this.startSprite.setInteractive();
-        //this.startSprite.on('pointerdown', () => this.start(), this);
-
+        //this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
 
         //title
-        this.titleSprite = this.add.sprite(SCREEN_CX + SCREEN_CX*(3/4) , SCREEN_CY - SCREEN_CY*(3/4), 'title').setVisible(true)
+        this.titleSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'title').setVisible(true)
         this.titleSprite.displayWidth = SCREEN_H;
         
         //information turn mobile
-        this.turnMobileSprite = this.add.sprite(SCREEN_H, SCREEN_W, 'turn_mobile').setVisible(false);
+        //this.turnMobileSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'turn_mobile').setVisible(false);
 
         if(screen.availHeight < screen.availWidth) {
             //in landscape
-            this.startSprite.angle = 0;
+            //this.startSprite.angle = 0;
             this.titleSprite.angle = 0;
         } else {
             //in portrait mode
-            this.startSprite.angle = 90;
+            //this.turnMobileSprite.setVisible(true);
+            //this.startSprite.angle = 90;
             this.titleSprite.angle = 90;
-            this.turnMobileSprite.setVisible(true);
+            //this.turnMobileSprite.angle = 90;
         }
             //listener to pause the game
         this.input.keyboard.on('keydown-SPACE', function() {
