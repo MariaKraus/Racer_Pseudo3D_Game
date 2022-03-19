@@ -114,37 +114,37 @@ class MainScene extends Phaser.Scene
         this.camera = new Camera(this);
         this.player = new Player(this);
             // Check touch input
-	window.addEventListener('touchstart', function()
-	{			
-		IS_TOUCH	= true;
-        mainScene.pause();
-        mainScene.launch('ScenePause');
-	});
-
-    //pause game if the screen orientation changes
-    window.addEventListener('resize', function (event) {
-        if(event.target.screen.availHeight > event.target.screen.availWidth) {
-            isInPortrait = true;
+	    window.addEventListener('touchstart', function()
+	    {			
+		    IS_TOUCH	= true;
             mainScene.pause();
             mainScene.launch('ScenePause');
-        }
-    }, this);        
+	    });
 
-    //listener to pause the game
-    this.input.keyboard.on('keydown-SPACE', function() {
-        this.scene.pause();
-        this.scene.launch('ScenePause');
-    }, this);
+        //pause game if the screen orientation changes
+        window.addEventListener('resize', function (event) {
+            if(event.target.screen.availHeight > event.target.screen.availWidth) {
+                isInPortrait = true;
+                mainScene.pause();
+                mainScene.launch('ScenePause');
+            }
+        }, this);        
 
-    //steering on computer
-    keys = this.input.keyboard.addKeys({
-        left: 'left',
-        right: 'right'
-    });
+        //listener to pause the game
+        this.input.keyboard.on('keydown-SPACE', function() {
+            this.scene.pause();
+            this.scene.launch('ScenePause');
+        }, this);
 
-    this.events.on('resume', function() {
-        this.settings.show();
-    }, this);
+        //steering on computer
+        keys = this.input.keyboard.addKeys({
+            left: 'left',
+            right: 'right'
+        }); 
+
+        this.events.on('resume', function() {
+            this.settings.show();
+        }, this);
     }
 
     /**
@@ -204,7 +204,9 @@ class PauseScene extends Phaser.Scene
         //Start button
         this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
         this.startSprite.setInteractive();
-        this.startSprite.on('pointerdown', () => this.start(), this);
+        //this.startSprite.on('pointerdown', () => this.start(), this);
+
+
         //title
         this.titleSprite = this.add.sprite(SCREEN_CX + SCREEN_CX*(3/4) , SCREEN_CY - SCREEN_CY*(3/4), 'title').setVisible(true)
         this.titleSprite.displayWidth = SCREEN_H;
@@ -228,6 +230,19 @@ class PauseScene extends Phaser.Scene
             this.scene.stop();
         }, this);
 
+
+	    window.addEventListener('touchstart', function()
+	    {			
+            if(screen.availHeight < screen.availWidth) {
+                //in landscape
+                  pauseScene.scene.startSprite.setVisible(false);
+                  pauseScene.scene.titleSprite.setVisible(false);
+                  pauseScene.resume('SceneMain');
+                  pauseScene.stop();
+              } else {
+                 turnMobileSprite.setVisible(true);
+              }
+	    }, this);
         /*
         //change the pause scene on orientation change
         window.addEventListener('resize', function () {
@@ -244,18 +259,17 @@ class PauseScene extends Phaser.Scene
         }, this);
         */
     }
-    start() {
-        //if(screen.availHeight < screen.availWidth) {
-            //in landscape
+    startMain() {
+        if(screen.availHeight < screen.availWidth) {
+          //in landscape
             this.startSprite.setVisible(false);
             this.titleSprite.setVisible(false);
             this.scene.resume('SceneMain');
             this.scene.stop();
-        //} else {
-         //   turnMobileSprite.setVisible(true);
-        //}
+        } else {
+           turnMobileSprite.setVisible(true);
+        }
     }
-
 }
 
 //game configuration
