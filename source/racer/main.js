@@ -101,7 +101,7 @@ class MainScene extends Phaser.Scene
         */
 
         this.sprites = [
-            this.add.image(0, 0, 'car').setVisible(false)
+            this.add.image(0, 0, 'car').setVisible(false).scale(SCREEN_W/8),
         ];
 
         //settings instance
@@ -265,8 +265,8 @@ var config = {
         mode: Phaser.Scale.NO_SCALE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         forceOrientation: (true,false),
-        enterIncorrectOrientation: handleIncorrect,
-        leaveIncorrectOrientation: handleCorrect,
+        //enterIncorrectOrientation: handleIncorrect,
+        //leaveIncorrectOrientation: handleCorrect,
         setScreenSize: true,
         pageAlignHorizontally: true,
         pageAlignHorizontally:true
@@ -303,4 +303,4 @@ function handleCorrect(){
        }
        document.getElementById("turn").style.display="none";
    }
-}*()
+}*/
