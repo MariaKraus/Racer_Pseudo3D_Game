@@ -200,7 +200,9 @@ class MainScene extends Phaser.Scene
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
                 this.player.update(dt, keys);
-                this.circuit.render3D();
+                if (this.circuit.render3D() == false) {
+                    state = STATE_GAMEOVER;
+                }
                 this.camera.update();
                 this.settings.show(time);
 
@@ -296,6 +298,32 @@ class PauseScene extends Phaser.Scene
         } else {
            turnMobileSprite.setVisible(true);
         }
+    }
+}
+
+class GoalScene extends Phaser.Scene
+{
+    constructor() {
+        super({key: 'GoalScene'});  
+    }
+
+    preload(){
+        pauseScene = this.scene;
+        this.load.image('imgBack', 'source/assets/img_back.png');
+        this.load.image('star', 'source/assets/star.png');
+        this.load.image('title', 'source/assets/title.png');
+    }
+
+    create(){ 
+        this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
+        //Start button
+        //this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
+
+        //title
+        this.titleSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'title').setVisible(true);
+        this.titleSprite.displayWidth = SCREEN_H;
+
+        this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star');
     }
 }
 

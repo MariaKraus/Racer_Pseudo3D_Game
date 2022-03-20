@@ -38,7 +38,7 @@ var ROADSEGMENTS = [
     [ROAD.LENGTH.LONG, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.SMALL],
     [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, -ROAD.HILL.MEDIUM],
     [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM],
-    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.MEDIUM, ROAD.HILL.SMALL],
+    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.NONE, ROAD.HILL.NONE],
     [ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.NONE, ROAD.HILL.NONE],
 ]
 
@@ -67,8 +67,8 @@ class Circuit
         SPRITES.SCALE = 0.3 * (1/this.roadWidth);
 
         //Roadlength is hardcoded, depends on number of roadsegments
-        this.roadlength = 1050000;
-        this.total_segments = 0;
+        this.roadLength = 0;
+        this.total_segments = 5250;
         this.visible_segments = 300;
 
         //number of strips that form a pavement
@@ -94,8 +94,6 @@ class Circuit
 
         this.total_segments = this.segments.length;
         this.roadLength = this.total_segments * this.segmentLength;
-        console.log(this.roadLength);
-
     }
 
     /**
@@ -195,9 +193,12 @@ class Circuit
             sprites : []
         });
 
-        if (n == 3* this.visible_segments) {
+        console.log(n);
+        console.log(this.total_segments - 1* this.visible_segments);
+        if (n == this.total_segments - this.visible_segments) {
             //console.log(this.counter);
             this.addSegmentSprite(n, 'goal', -1);
+            console.log(n);
         }
     } 
 
@@ -299,9 +300,15 @@ class Circuit
 	* Renders the road by drawing segment by segment (pseudo 3D view).
 	*/	
 	render3D(){
-		this.graphics.clear();
 
+        //define the clipping bottom line to render only segments above it.
+        var clipBottomLine = SCREEN_H;
+		// get the camera
+		var camera = this.scene.camera;	
+
+        this.graphics.clear();
         this.texture.clear();
+
         var player = this.scene.player;
         var player_segment = this.getSegment(player.z);
         //centrifugal force
@@ -311,17 +318,19 @@ class Circuit
             && ((player_segment.point.screen.x + player.x > SCREEN_CX + this.roadWidth/2 + SCREEN_CX/10)
             || (player_segment.point.screen.x + player.x < SCREEN_CX - this.roadWidth/2 - SCREEN_CX/10))) {
                 player.speed = player.maxSpeed/3;
-            } else {
+        } else {
                 player.faster();
-            }
+        }
+        console.log(camera.z/this.segmentLength);
+        console.log(this.total_segments);
+        //stop game if the player reaches the goal
+        if (Math.abs(camera.z/this.segmentLength - (this.total_segments - this.visible_segments)) < 1) {
+            console.log("over");
+            return false;
+        }
+
         this.texture.draw(player.sprite, player.screen.x, player.screen.y);
         //console.log(player_segment);
-
-        //define the clipping bottom line to render only segments above it.
-        var clipBottomLine = SCREEN_H;
-
-		// get the camera
-		var camera = this.scene.camera;	
 
         //get the base segment
         var baseSegment = this.getSegment(camera.z);
@@ -365,26 +374,18 @@ class Circuit
 					currSegment.color
                     
 				);
-                //Render.sprite(ctx, width, height, resolution, roadWidth, sprites, car.sprite, spriteScale, spriteX, spriteY, -0.5, -1, segment.clip);
-                /**
-                 * makes sprites visible
-                *
-
-                */
-
                 clipBottomLine = currBottomLine; 
-            }
-        }
-        if (currSegment.sprites.length) {
-          
-            for (let i = 0; i < currSegment.sprites.length; i++) {
-                let curr_sprite = currSegment.sprites[i].spriteRef;
-                curr_sprite.setDepth(1);
-                
-                let destW = 15*(curr_sprite.width * p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth); //currSegment.sprites[i].spriteRef.offset;
-                let destH = 15*(705* p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth);
-                let sprite_x = p1.x - p1.w; - destW;
-                let sprite_y = p1.y;
+            
+        
+            if (currSegment.sprites.length != 0) {
+                for (let i = 0; i < currSegment.sprites.length; i++) {
+                    let curr_sprite = currSegment.sprites[i].spriteRef;
+                    curr_sprite.setDepth(1);
+                    console.log(p1);
+                    let destW = 15*(curr_sprite.width * p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth); //currSegment.sprites[i].spriteRef.offset;
+                    let destH = 15*(705* p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth);
+                    let sprite_x = p1.x - p1.w; - destW;
+                    let sprite_y = p1.y;
 
                 //this.graphics.drawImage(currSegment.sprites[i].spriteRef, spriteX, spriteY);
                 
@@ -392,7 +393,7 @@ class Circuit
                     && sprite_x > curr_sprite.width * p1.scale * SCREEN_W/2) // clip by (already rendered) segment
                 {
                     curr_sprite.setPosition(sprite_x, sprite_y);
-                    //curr_sprite.setOrigin(1,1);
+                    curr_sprite.setOrigin(1, 1);
 
                     curr_sprite.setDisplaySize(destW, destH);
                     //currSegment.sprites[i].spriteRef.setScale(SPRITES.SCALE);
@@ -402,7 +403,8 @@ class Circuit
                 }
             }
         }
-
+        }
+    }
 
 	}
 
