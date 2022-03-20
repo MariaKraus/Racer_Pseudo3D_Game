@@ -48,9 +48,10 @@ class Circuit
     constructor(scene) {
 
         this.scene = scene;
-        this.ctx = scene.ctx;
-        this.landscape_sprites = scene.sprites;
-        this.images = scene.images;
+        //this.ctx = scene.ctx;
+        //this.landscape_sprites = scene.sprites;
+        //this.images = scene.images;
+        this.goalSprite = scene.goalSprite;
         
 
         //graphics to draw the road polygons on it
@@ -65,7 +66,8 @@ class Circuit
 
         SPRITES.SCALE = 0.3 * (1/this.roadWidth);
 
-        this.roadlength = 0;
+        //Roadlength is hardcoded, depends on number of roadsegments
+        this.roadlength = 1050000;
         this.total_segments = 0;
         this.visible_segments = 300;
 
@@ -92,6 +94,7 @@ class Circuit
 
         this.total_segments = this.segments.length;
         this.roadLength = this.total_segments * this.segmentLength;
+        console.log(this.roadLength);
 
     }
 
@@ -171,16 +174,13 @@ class Circuit
      * Creates a new Segment
      */
     createSegment(curve , height) {
-
-        
-        //define colors
+     //define colors
         const COLORS = {
             LIGHT: {road: '0x888888', curb: '0x595959', pavement: '0x808080', grass: '0x429352',},
             DARK: {road: '0x666666', curb: '0x595959', pavement: '0x888888', grass: '0x397d46'}};
 
         //current number of segments
         var n = this.segments.length;
-        var mod = 113;
         this.counter++;
 
         this.segments.push({
@@ -195,18 +195,14 @@ class Circuit
             sprites : []
         });
 
-        if (this.counter > this.visible_segments) {
-            mod = 30;
-        }
-        if (n % mod == 0 ) {
+        if (n == 3* this.visible_segments) {
             //console.log(this.counter);
-            this.addSegmentSprite(n, 'housesLeft', -1);
+            this.addSegmentSprite(n, 'goal', -1);
         }
     } 
 
     addSegmentSprite(index, spriteKey, offset) {
         
-        /**
         let sprite = this.scene.add.image(0, 0, spriteKey);
 
         this.segments[index].sprites.push({
@@ -216,7 +212,7 @@ class Circuit
 
         });
         sprite.setVisible(false);
-        */
+        
     }
 
     /**
@@ -396,7 +392,7 @@ class Circuit
                     && sprite_x > curr_sprite.width * p1.scale * SCREEN_W/2) // clip by (already rendered) segment
                 {
                     curr_sprite.setPosition(sprite_x, sprite_y);
-                    curr_sprite.setOrigin(1,1);
+                    //curr_sprite.setOrigin(1,1);
 
                     curr_sprite.setDisplaySize(destW, destH);
                     //currSegment.sprites[i].spriteRef.setScale(SPRITES.SCALE);

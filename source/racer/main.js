@@ -54,7 +54,8 @@ class MainScene extends Phaser.Scene
         mainScene = this.scene;
 
         this.load.image('imgBack', 'source/assets/img_back.png');
-        this.load.image('pause', 'source/assets/pause.png');
+        this.load.image('goal', 'source/assets/Ziel.png');
+        this.load.image('car', 'source/assets/car.png');
         
         //this.load.setPath('assets/sprites');
         /*this.load.spritesheet([
@@ -70,10 +71,10 @@ class MainScene extends Phaser.Scene
         this.images[0].onerror=function(){alert(img1.src+' failed to load.');};
         this.images[0].scr = '../assets/img_back.png';
         */
-        this.load.image('car', 'source/assets/car.png');
 
 
-        this.load.image('housesLeft', 'source/assets/house1_L1.png');
+
+        //this.load.image('housesLeft', 'source/assets/house1_L1.png');
         //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
     /*onResize() {
@@ -107,10 +108,16 @@ class MainScene extends Phaser.Scene
         this.playerSprite.displayWidth = SCREEN_W * 0.2;
         this.playerSprite.scaleY= this.playerSprite.scaleX;
         this.playerSprite.setOrigin(0.5,0);
+
+
+        this.goalSprite = this.add.sprite(0, 0, 'goal').setVisible(false);
+        this.goalSprite.setOrigin(0.5,0);
+
         //scale evenly
+        /*
         this.sprites = [
             this.add.sprite(0, 0, 'car').setVisible(false),
-        ];
+        ];*/
 
         //settings instance
         this.circuit = new Circuit(this);
@@ -195,6 +202,7 @@ class MainScene extends Phaser.Scene
                 this.player.update(dt, keys);
                 this.circuit.render3D();
                 this.camera.update();
+                this.settings.show(time);
 
                 break;
             case STATE_GAMEOVER:

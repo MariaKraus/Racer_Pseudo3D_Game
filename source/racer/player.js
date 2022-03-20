@@ -38,7 +38,7 @@ class Player
         //this.screen.w = this.sprite.width;
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
-        this.screen.y = SCREEN_H - (this.screen.h/2);     
+        this.screen.y = SCREEN_H - (this.screen.h/3);     
     }
 
     startGyro() {
@@ -80,11 +80,11 @@ class Player
         	
         } else {
             if (keys.left.isDown) {
-                this.x -= this.dv *1.5;
+                this.x -= this.dv *1.3;
                 this.x = this.getBorder(this.x);
             }
             if (keys.right.isDown) {
-                this.x += this.dv *1.5;
+                this.x += this.dv *1.3;
                 this.x = this.getBorder(this.x);
             }
         }   
