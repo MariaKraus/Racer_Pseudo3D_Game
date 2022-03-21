@@ -3,7 +3,7 @@ class Settings
     constructor (scene) {
         this.scene = scene;
 		
-		var font = {font: '32px Arial', fill: '#ff1100', stroke: '#000', strokeThickness: 4};
+		var font = {font: '48px Arial', fill: '#ff1100', stroke: '#000', strokeThickness: 10};
 		this.timetxt = scene.add.text(0 , 0 , '', font);
 		this.show();
 	}
@@ -11,8 +11,8 @@ class Settings
 	/**
 	* Shows all settings.
 	*/	
-	show(time){
+	show(time, txt=''){
 		var gameRuntime = time;
-		this.timetxt.setText(Math.round(gameRuntime));
+		this.timetxt.setText(txt + Math.round(gameRuntime));
 	}
 }

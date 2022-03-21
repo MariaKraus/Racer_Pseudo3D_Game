@@ -35,6 +35,7 @@ var keys;
 var isInPortrait;
 var mainScene;
 var pauseScene;
+var score = 0;
 
 var running = true;
 
@@ -205,10 +206,11 @@ class MainScene extends Phaser.Scene
                 }
                 this.camera.update();
                 this.settings.show(time);
-
                 break;
             case STATE_GAMEOVER:
-                console.log("Play game.");
+                this.score = time;
+                this.scene.pause();
+                this.scene.launch('GoalScene');
                 break;
         }
     }
@@ -324,6 +326,8 @@ class GoalScene extends Phaser.Scene
         this.titleSprite.displayWidth = SCREEN_H;
 
         this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star');
+        this.settings = new Settings(this);
+        this.settings.show(time, 'Your time: ');
     }
 }
 
@@ -351,7 +355,7 @@ var config = {
         pageAlignHorizontally:true
     },
 
-    scene: [MainScene, PauseScene]
+    scene: [MainScene, PauseScene, GoalScene]
 };
 
 

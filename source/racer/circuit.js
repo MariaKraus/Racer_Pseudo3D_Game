@@ -174,8 +174,8 @@ class Circuit
     createSegment(curve , height) {
      //define colors
         const COLORS = {
-            LIGHT: {road: '0x888888', curb: '0x595959', pavement: '0x808080', grass: '0x429352',},
-            DARK: {road: '0x666666', curb: '0x595959', pavement: '0x888888', grass: '0x397d46'}};
+            LIGHT: {road: '0xffffff', curb: '0x000000', pavement: '0x000000', grass: '0x7a7b82',},
+            DARK: {road: '0x000000', curb: '0x000000', pavement: '0xffffff', grass: '0x333336'}};
 
         //current number of segments
         var n = this.segments.length;
