@@ -106,7 +106,7 @@ class MainScene extends Phaser.Scene
         */
 
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
-        this.playerSprite.displayWidth = SCREEN_W * 0.2;
+        this.playerSprite.displayWidth = SCREEN_W * 0.3;
         this.playerSprite.scaleY= this.playerSprite.scaleX;
         this.playerSprite.setOrigin(0.5,0);
 
@@ -325,7 +325,7 @@ class GoalScene extends Phaser.Scene
         this.titleSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'title').setVisible(true);
         this.titleSprite.displayWidth = SCREEN_H;
 
-        this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star');
+        this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star').setVisible(true);
         this.settings = new Settings(this);
         this.settings.show(time, 'Your time: ');
     }

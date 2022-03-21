@@ -193,12 +193,10 @@ class Circuit
             sprites : []
         });
 
-        console.log(n);
-        console.log(this.total_segments - 1* this.visible_segments);
-        if (n == this.total_segments - this.visible_segments) {
+        if ((n - this.total_segments - this.visible_segments) < 4) {
             //console.log(this.counter);
-            this.addSegmentSprite(n, 'goal', -1);
-            console.log(n);
+            //this.addSegmentSprite(n, 'goal', -1);
+            this.segments[n].color = '0xff0000';
         }
     } 
 

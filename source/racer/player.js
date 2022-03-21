@@ -38,7 +38,7 @@ class Player
         //this.screen.w = this.sprite.width;
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
-        this.screen.y = SCREEN_H - (this.screen.h/3);     
+        this.screen.y = SCREEN_H - (this.screen.h/2);     
     }
 
     startGyro() {
@@ -75,16 +75,16 @@ class Player
         //Only moves in Z direction right now
         this.z += this.speed * dt;
         if (IS_TOUCH) {
-            this.x += gyro_x * this.dv;
+            this.x += gyro_x * this.dv * 0.8;
             this.x = this.getBorder(this.x);
         	
         } else {
             if (keys.left.isDown) {
-                this.x -= this.dv *1.3;
+                this.x -= this.dv *1.8;
                 this.x = this.getBorder(this.x);
             }
             if (keys.right.isDown) {
-                this.x += this.dv *1.3;
+                this.x += this.dv *1.8;
                 this.x = this.getBorder(this.x);
             }
         }   
