@@ -233,7 +233,7 @@ class GoalScene extends Phaser.Scene
 
         this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star').setVisible(true);
         this.starSprite.displayWidth = 100;
-        this.starSprite.scaleY= this.playerSprite.scaleX;
+        this.starSprite.scaleY= this.starSprite.scaleX;
 
 
         this.settings = new Settings(this);
