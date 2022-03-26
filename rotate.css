@@ -1,8 +1,0 @@
-@media only screen and (orientation:portrait) {
-  body {
-    transform: rotate(90deg) translateY(-50%);
-    transform-origin:top left;
-    height: 100vw;
-  }
-}
-//        <link href="rotate.css" rel="stylesheet">

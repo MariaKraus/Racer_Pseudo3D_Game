@@ -7,26 +7,17 @@ class Player
 {
     constructor(scene) {
         this.scene = scene;
-
         this.sprite = this.scene.playerSprite;
         //player world coordinates
         this.x = 0;
         this.y = 0;
         this.z = 0;
-        //this.w = this.sprite.width;
-
-        this.max_x = SCREEN_W;
-        this.min_x = -SCREEN_W;
-
         this.screen = {x:0, y:0, w:0, h:0};
 
         //max_speed => player can't be faster than rendering
         this.maxSpeed = (scene.circuit.segmentLength) / (1/60);
-
         this.speed = 0;
-
         this.speedPercent = 0;
-
         this.dv = 0;
 
     }
@@ -39,16 +30,16 @@ class Player
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
         console.log(SCREEN_H);
-        this.screen.y = SCREEN_H;// - (this.screen.h/2);     
+        this.screen.y = SCREEN_H;
     }
 
     startGyro() {
-            gyro.frequency = 10;
-         // start gyroscope detection
-            gyro.startTracking(function(o) {
-                            // updating player velocity
+        gyro.frequency = 10;
+        // start gyroscope detection
+        gyro.startTracking(function(o) {
+            // updating player velocity
             gyro_x += o.beta/200;
-            });	
+        });	
     }
 
     /**
@@ -76,30 +67,17 @@ class Player
         //Only moves in Z direction right now
         this.z += this.speed * dt;
         if (IS_TOUCH) {
-            this.x += gyro_x * this.dv * 0.5;
-            this.x = this.getBorder(this.x);
-        	
+            this.x += gyro_x * this.dv * 0.5;        	
         } else {
             if (keys.left.isDown) {
                 this.x -= this.dv *1.8;
-                this.x = this.getBorder(this.x);
             }
             if (keys.right.isDown) {
                 this.x += this.dv *1.8;
-                this.x = this.getBorder(this.x);
             }
         }   
     }
 
-    getBorder(x_value) {
-        if (x_value > this.max_x) {
-            return this.max_x;
-        } else if (x_value < this.min_x){
-            return this.min_X;
-        } else {
-            return x_value;
-        }
-    }
 
     faster() {
         if (this.speed <= this.maxSpeed) {

@@ -1,6 +1,3 @@
-//for tests:
-//localhost:80/virus_racer/source/
-
 //----------------------------------------------------------------------
 // Global Constants 
 //----------------------------------------------------------------------
@@ -16,23 +13,19 @@ const GOAL_SCENE = 3;
 //----------------------------------------------------------------------
 //Global Variables
 //---------------------------------------------------------------------
-// screen size
-var SCREEN_W = (screen.availWidth > screen.availHeight)?screen.availWidth: screen.availHeight;
-var SCREEN_H = (screen.availWidth > screen.availHeight)?screen.availHeight: screen.availWidth;
 
-var SPRITES = {
-    yellow_house:   {x: 5, y: 5, w:450, h:500}
-}
+// current state
+var state = STATE_INIT;
+// screen size
+var SCREEN_W = screen.availWidth;
+var SCREEN_H = screen.availHeight;
 
 // coordinates of the screen center
 var SCREEN_CX = SCREEN_W/2;
 var SCREEN_CY = SCREEN_H/2;
 
-// current state
-var state = STATE_INIT;
-
+//sensory input
 var IS_TOUCH = false;
-
 //kees for steering
 var keys;
 
@@ -43,15 +36,10 @@ var goalScene; // = 3
 var currentScene = 2; //Start screen
 var score = 0;
 
-var running = true;
-
-
 class MainScene extends Phaser.Scene
 {
     constructor() {
-        super({key: 'SceneMain'});
-        //canvas = document.getElementById('canvas');       // our canvas...      
-     
+        super({key: 'SceneMain'});   
     }
 
     /**
@@ -92,7 +80,6 @@ class MainScene extends Phaser.Scene
             //if mainscene is the currentScene
             if (currentScene == MAIN_SCENE) {
 		        IS_TOUCH	= true;
-                running = false;
                 mainScene.pause();
                 timer.paused = true;
                 currentScene = PAUSE_SCENE;
@@ -104,7 +91,6 @@ class MainScene extends Phaser.Scene
                         pauseScene.scene.titleSprite.setVisible(false);
                         pauseScene.resume('SceneMain');
                         pauseScene.stop();
-                        running = true;
                     } 
               }	
             }
@@ -136,10 +122,10 @@ class MainScene extends Phaser.Scene
             right: 'right'
         }); 
 
-        /*
+        
         this.events.on('resume', function() {
-            this.settings.show();
-        }, this);*/
+            currentScene = MAIN_SCENE;
+        }, this);
     }
 
     /**
@@ -156,11 +142,13 @@ class MainScene extends Phaser.Scene
                 this.scene.launch('ScenePause');
                 break;
             case STATE_RESTART:
+                currentScene = MAIN_SCENE;
                 state = STATE_PLAY;
                 this.circuit.create();
                 this.player.restart();
                 break;
             case STATE_PLAY:
+                currentScene = MAIN_SCENE;
                 timer.paused = false;
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
@@ -218,47 +206,7 @@ class PauseScene extends Phaser.Scene
             this.scene.resume('SceneMain');
             this.scene.stop();
         }, this);
-
-        /*
-	    window.addEventListener('touchstart', function()
-	    {			
-            if(screen.availHeight < screen.availWidth) {
-                //in landscape
-                  pauseScene.scene.startSprite.setVisible(false);
-                  pauseScene.scene.titleSprite.setVisible(false);
-                  pauseScene.resume('SceneMain');
-                  pauseScene.stop();
-              } else {
-                 turnMobileSprite.setVisible(true);
-              }
-	    }, this);*/
-        /*
-        //change the pause scene on orientation change
-        window.addEventListener('resize', function () {
-            if(screen.availHeight < screen.availWidth) {
-                //in landscape
-                startSprite.angle = 90;
-                titleSprite.angle = 90;
-            } else {
-                //in portrait mode
-                startSprite.angle = 0;
-                titleSprite.angle = 0;
-                turnMobileSprite.setVisible(false);
-            }
-        }, this);
-        */
     }
-    /*startMain() {
-        if(screen.availHeight < screen.availWidth) {
-          //in landscape
-            this.startSprite.setVisible(false);
-            this.titleSprite.setVisible(false);
-            this.scene.resume('SceneMain');
-            this.scene.stop();
-        } else {
-           turnMobileSprite.setVisible(true);
-        }
-    }*/
 }
 
 class GoalScene extends Phaser.Scene
@@ -298,20 +246,11 @@ var config = {
     type: Phaser.AUTO,
     width: SCREEN_W,
     height: SCREEN_H,
-    //fullscreenTarget: document.getElementById("wrapper"),
-    /*physics: {
-        default: 'arcade',
-        arcade: {
-            debug: false,
-        }
-    },*/
 
     scale: {
         mode: Phaser.Scale.NO_SCALE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         forceOrientation: (true,false),
-        //enterIncorrectOrientation: handleIncorrect,
-        //leaveIncorrectOrientation: handleCorrect,
         setScreenSize: true,
         pageAlignHorizontally: true,
         pageAlignHorizontally:true
@@ -320,32 +259,5 @@ var config = {
     scene: [MainScene, PauseScene, GoalScene]
 };
 
-
 // game instance
 var game = new Phaser.Game(config);
-
-/*
-function displayOnPortrait(event){
-    if(event.srcElement.innerHeight > event.srcElement.innerWidth) {
-        isInPortrait = true;
-    } else{
-        isInPortrait = false;
-    }
-}
-
-
-function handleIncorrect(){
-    if(!game.device.desktop){
-        document.getElementById("turn").style.display="block";
-    }
-}
-
-function handleCorrect(){
-   if(!game.device.desktop){
-       if(isInPortrait){
-           gameRatio = window.innerWidth/window.innerHeight;		
-           //game.renderer.resize(window.innerWidth, window.innerHeight);	
-       }
-       document.getElementById("turn").style.display="none";
-   }
-}*/
