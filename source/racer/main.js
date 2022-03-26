@@ -88,6 +88,7 @@ class MainScene extends Phaser.Scene
                 //in landscape
                 if(screen.availHeight < screen.availWidth) {
                     if (currentScene == PAUSE_SCENE) {
+                        IS_TOUCH	= true;
                         pauseScene.scene.titleSprite.setVisible(false);
                         pauseScene.resume('SceneMain');
                         pauseScene.stop();
