@@ -96,7 +96,7 @@ class MainScene extends Phaser.Scene
             }
 	    });
 
-        // Check touch input
+        // Check click input
 	    window.addEventListener('click', function()
 	    {	
             //if mainscene is the currentScene
