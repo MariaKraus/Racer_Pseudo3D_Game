@@ -39,7 +39,7 @@ class Player
         this.screen.h = this.sprite.height;
         this.screen.x = SCREEN_CX;
         console.log(SCREEN_H);
-        this.screen.y = SCREEN_H - (this.screen.h/2);     
+        this.screen.y = SCREEN_H;// - (this.screen.h/2);     
     }
 
     startGyro() {

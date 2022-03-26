@@ -9,6 +9,10 @@ const STATE_INIT = 1;
 const STATE_RESTART = 2;
 const STATE_PLAY = 3;
 const STATE_GAMEOVER = 4;
+
+const MAIN_SCENE = 1;
+const PAUSE_SCENE = 2;
+const GOAL_SCENE = 3;
 //----------------------------------------------------------------------
 //Global Variables
 //---------------------------------------------------------------------
@@ -33,8 +37,10 @@ var IS_TOUCH = false;
 var keys;
 
 var timer;
-var mainScene;
-var pauseScene;
+var mainScene; // = 1
+var pauseScene; // = 2
+var goalScene; // = 3
+var currentScene = 2; //Start screen
 var score = 0;
 
 var running = true;
@@ -112,7 +118,7 @@ class MainScene extends Phaser.Scene
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
         this.playerSprite.displayWidth = SCREEN_W * 0.3;
         this.playerSprite.scaleY= this.playerSprite.scaleX;
-        this.playerSprite.setOrigin(0.5,0.5);
+        this.playerSprite.setOrigin(0.5,0.0);
 
 
         //this.goalSprite = this.add.sprite(0, 0, 'goal').setVisible(false);
@@ -132,23 +138,23 @@ class MainScene extends Phaser.Scene
             // Check touch input
 	    window.addEventListener('touchstart', function()
 	    {	
-            if (running) {
+            //if mainscene is the currentScene
+            if (currentScene == MAIN_SCENE) {
 		        IS_TOUCH	= true;
                 running = false;
                 mainScene.pause();
-                timer.pauseds = true;
+                timer.paused = true;
+                currentScene = PAUSE_SCENE;
                 mainScene.launch('ScenePause');
-
             } else {
+                //in landscape
                 if(screen.availHeight < screen.availWidth) {
-                    //in landscape
-                    //pauseScene.scene.startSprite.setVisible(false);
-                    pauseScene.scene.titleSprite.setVisible(false);
-                    pauseScene.resume('SceneMain');
-                    pauseScene.stop();
-                    running = true;
-              } else {
-                    //pauseScene.scene.turnMobileSprite.setVisible(true);
+                    if (currentScene == PAUSE_SCENE) {
+                        pauseScene.scene.titleSprite.setVisible(false);
+                        pauseScene.resume('SceneMain');
+                        pauseScene.stop();
+                        running = true;
+                    } 
               }	
             }
 	    });
@@ -169,6 +175,7 @@ class MainScene extends Phaser.Scene
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.pause();
             timer.paused = true;
+            currentScene = pauseScene;
             this.scene.launch('ScenePause');
         }, this);
 
@@ -264,6 +271,7 @@ class PauseScene extends Phaser.Scene
         }
             //listener to pause the game
         this.input.keyboard.on('keydown-SPACE', function() {
+            currentScene = MAIN_SCENE;
             this.scene.resume('SceneMain');
             this.scene.stop();
         }, this);
@@ -297,7 +305,7 @@ class PauseScene extends Phaser.Scene
         }, this);
         */
     }
-    startMain() {
+    /*startMain() {
         if(screen.availHeight < screen.availWidth) {
           //in landscape
             this.startSprite.setVisible(false);
@@ -307,7 +315,7 @@ class PauseScene extends Phaser.Scene
         } else {
            turnMobileSprite.setVisible(true);
         }
-    }
+    }*/
 }
 
 class GoalScene extends Phaser.Scene
@@ -333,7 +341,10 @@ class GoalScene extends Phaser.Scene
         this.titleSprite.displayWidth = SCREEN_H;
 
         this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star').setVisible(true);
-        this.startSprite.scale(2,2);
+        this.starSprite.displayWidth = 100;
+        this.playerSprite.scaleY= this.playerSprite.scaleX;
+
+
         this.settings = new Settings(this);
         this.settings.show(score, 'Your time: ');
     }
