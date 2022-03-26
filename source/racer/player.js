@@ -76,7 +76,7 @@ class Player
         //Only moves in Z direction right now
         this.z += this.speed * dt;
         if (IS_TOUCH) {
-            this.x += gyro_x * this.dv * 0.8;
+            this.x += gyro_x * this.dv * 0.5;
             this.x = this.getBorder(this.x);
         	
         } else {
