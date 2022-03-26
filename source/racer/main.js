@@ -96,6 +96,27 @@ class MainScene extends Phaser.Scene
             }
 	    });
 
+        // Check touch input
+	    window.addEventListener('click', function()
+	    {	
+            //if mainscene is the currentScene
+            if (currentScene == MAIN_SCENE) {
+                mainScene.pause();
+                timer.paused = true;
+                currentScene = PAUSE_SCENE;
+                mainScene.launch('ScenePause');
+            } else {
+                //in landscape
+                if(screen.availHeight < screen.availWidth) {
+                    if (currentScene == PAUSE_SCENE) {
+                        pauseScene.scene.titleSprite.setVisible(false);
+                        pauseScene.resume('SceneMain');
+                        pauseScene.stop();
+                    } 
+              }	
+            }
+	    });
+
         //pause game if the screen orientation changes
         window.addEventListener('resize', function (event) {
             if(event.target.screen.availHeight > event.target.screen.availWidth) {
