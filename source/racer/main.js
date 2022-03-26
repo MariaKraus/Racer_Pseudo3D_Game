@@ -17,8 +17,8 @@ const GOAL_SCENE = 3;
 // current state
 var state = STATE_INIT;
 // screen size
-var SCREEN_W = screen.availWidth;
-var SCREEN_H = screen.availHeight;
+var SCREEN_W = (screen.availWidth > screen.availHeight)?screen.availWidth: screen.availHeight;
+var SCREEN_H = (screen.availWidth > screen.availHeight)?screen.availHeight: screen.availWidth;
 
 // coordinates of the screen center
 var SCREEN_CX = SCREEN_W/2;
