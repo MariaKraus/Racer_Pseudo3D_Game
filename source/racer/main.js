@@ -32,7 +32,7 @@ var IS_TOUCH = false;
 //kees for steering
 var keys;
 
-var isInPortrait;
+var timer;
 var mainScene;
 var pauseScene;
 var score = 0;
@@ -87,6 +87,10 @@ class MainScene extends Phaser.Scene
      * Creates all objects
      */
     create() {
+        timer = this.time.addEvent({
+            delay: 999999,
+            paused: true
+          });
     
         //this.scale.lockOrientation('landscape');
 
@@ -132,6 +136,7 @@ class MainScene extends Phaser.Scene
 		        IS_TOUCH	= true;
                 running = false;
                 mainScene.pause();
+                timer.pauseds = true;
                 mainScene.launch('ScenePause');
 
             } else {
@@ -153,6 +158,7 @@ class MainScene extends Phaser.Scene
             if(event.target.screen.availHeight > event.target.screen.availWidth) {
                 isInPortrait = true;
                 mainScene.pause();
+                timer.paused = true;
                 mainScene.launch('ScenePause');
             } else {
                 pauseScene.scene.titleSprite.angle = 0;
@@ -162,6 +168,7 @@ class MainScene extends Phaser.Scene
         //listener to pause the game
         this.input.keyboard.on('keydown-SPACE', function() {
             this.scene.pause();
+            timer.paused = true;
             this.scene.launch('ScenePause');
         }, this);
 
@@ -184,31 +191,31 @@ class MainScene extends Phaser.Scene
             case STATE_INIT:
                 console.log("Init game.");
                 state = STATE_RESTART;
-                if (screen.availHeight> screen.availWidth) {
-                    this.scene.pause();
-                    this.scene.launch('ScenePause');
-                }
                 this.camera.init();
                 this.player.init();
+                this.scene.pause();
+                this.scene.launch('ScenePause');
                 break;
             case STATE_RESTART:
-                console.log("Restart game.");
                 state = STATE_PLAY;
                 this.circuit.create();
                 this.player.restart();
                 break;
             case STATE_PLAY:
+                timer.paused = false;
                 //duration of the time period (min 1 s)
                 var dt = Math.min(1, delta/1000);
                 this.player.update(dt, keys);
+                this.settings.show(timer.getElapsedSeconds().toFixed(1));
                 if (this.circuit.render3D() == false) {
                     state = STATE_GAMEOVER;
                 }
                 this.camera.update();
-                this.settings.show(time);
+
                 break;
             case STATE_GAMEOVER:
-                this.score = time;
+                score = timer.getElapsedSeconds().toFixed(1);
+                console.log(score)
                 this.scene.pause();
                 this.scene.launch('GoalScene');
                 break;
@@ -327,7 +334,7 @@ class GoalScene extends Phaser.Scene
 
         this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star').setVisible(true);
         this.settings = new Settings(this);
-        this.settings.show(time, 'Your time: ');
+        this.settings.show(score, 'Your time: ');
     }
 }
 

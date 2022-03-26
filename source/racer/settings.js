@@ -11,7 +11,7 @@ class Settings
 	/**
 	* Shows all settings.
 	*/	
-	show(time, txt=''){
+	show(time=0, txt=''){
 		var gameRuntime = time;
 		this.timetxt.setText(txt + Math.round(gameRuntime));
 	}

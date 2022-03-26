@@ -11,9 +11,9 @@ var ROADSEGMENTS = [
     [ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.MEDIUM, -ROAD.HILL.SMALL],
     [ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, ROAD.CURVE.NONE, ROAD.HILL.NONE],
     [ROAD.LENGTH.LONG, ROAD.LENGTH.NONE, ROAD.LENGTH.LONG, ROAD.CURVE.NONE, ROAD.HILL.HIGH],
-    [ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.NONE, -ROAD.HILL.HIGH],
-    [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE],
-    [ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE],
+    [ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.EASY, -ROAD.HILL.HIGH],
+    [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE],
+    /*[ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE],
     [ROAD.LENGTH.LONG, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.SMALL],
     [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, -ROAD.HILL.MEDIUM],
     [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM],
@@ -35,10 +35,10 @@ var ROADSEGMENTS = [
     [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.MEDIUM],
     [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, -ROAD.HILL.MEDIUM],
     [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.NONE],
-    [ROAD.LENGTH.LONG, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.SMALL],
-    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, -ROAD.HILL.MEDIUM],
-    [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.EASY, ROAD.HILL.MEDIUM],
-    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, -ROAD.CURVE.NONE, ROAD.HILL.NONE],
+    [ROAD.LENGTH.LONG, ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.SMALL],*/
+    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.EASY, ROAD.HILL.MEDIUM],
+    [ROAD.LENGTH.SHORT, ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE],
+    [ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.MEDIUM, ROAD.CURVE.NONE, ROAD.HILL.NONE],
     [ROAD.LENGTH.LONG, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.SHORT, ROAD.CURVE.NONE, ROAD.HILL.NONE],
 ]
 
@@ -68,7 +68,8 @@ class Circuit
 
         //Roadlength is hardcoded, depends on number of roadsegments
         this.roadLength = 0;
-        this.total_segments = 5250;
+        this.total_segments = 150 * ROADSEGMENTS.length;
+        console.log(this.total_segments);
         this.visible_segments = 300;
 
         //number of strips that form a pavement
@@ -175,7 +176,9 @@ class Circuit
      //define colors
         const COLORS = {
             LIGHT: {road: '0xffffff', curb: '0x000000', pavement: '0x000000', grass: '0x7a7b82',},
-            DARK: {road: '0x000000', curb: '0x000000', pavement: '0xffffff', grass: '0x333336'}};
+            DARK: {road: '0x000000', curb: '0x000000', pavement: '0xffffff', grass: '0x333336'},
+            GOAL: {road: '0xff0000', curb: '0x000000', pavement: '0xff0000', grass: '0x333336'}};
+
 
         //current number of segments
         var n = this.segments.length;
@@ -193,10 +196,10 @@ class Circuit
             sprites : []
         });
 
-        if ((n - this.total_segments - this.visible_segments) < 4) {
-            //console.log(this.counter);
-            //this.addSegmentSprite(n, 'goal', -1);
-            this.segments[n].color = '0xff0000';
+
+        if ((this.total_segments - this.visible_segments - n < 8) && (this.total_segments - this.visible_segments - n) >= 0) {
+            console.log((this.total_segments) - this.visible_segments - n);
+            this.segments[n].color = COLORS.GOAL;
         }
     } 
 
@@ -319,8 +322,6 @@ class Circuit
         } else {
                 player.faster();
         }
-        console.log(camera.z/this.segmentLength);
-        console.log(this.total_segments);
         //stop game if the player reaches the goal
         if (Math.abs(camera.z/this.segmentLength - (this.total_segments - this.visible_segments)) < 1) {
             console.log("over");
@@ -379,7 +380,6 @@ class Circuit
                 for (let i = 0; i < currSegment.sprites.length; i++) {
                     let curr_sprite = currSegment.sprites[i].spriteRef;
                     curr_sprite.setDepth(1);
-                    console.log(p1);
                     let destW = 15*(curr_sprite.width * p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth); //currSegment.sprites[i].spriteRef.offset;
                     let destH = 15*(705* p1.scale * SCREEN_W/2) * (SPRITES.SCALE* this.roadWidth);
                     let sprite_x = p1.x - p1.w; - destW;
