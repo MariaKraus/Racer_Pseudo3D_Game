@@ -61,81 +61,32 @@ class MainScene extends Phaser.Scene
         mainScene = this.scene;
 
         this.load.image('imgBack', 'source/assets/img_back.png');
-        //this.load.image('goal', 'source/assets/Ziel.png');
         this.load.image('car', 'source/assets/car.png');
-        
-        //this.load.setPath('assets/sprites');
-        /*this.load.spritesheet([
-            { key: 'explosion', frameConfig: { frameWidth: 3500, frameHeight: 3508, endFrame: 23 } },
-        ]);
-
-                this.images = [];
-        this.images[0] = new Image();
-        this.images[0].onload = function(){
-            console.log('loaded')
-            this.ctx.drawImage(background, 100 ,100);
-        }
-        this.images[0].onerror=function(){alert(img1.src+' failed to load.');};
-        this.images[0].scr = '../assets/img_back.png';
-        */
-
-
-
-        //this.load.image('housesLeft', 'source/assets/house1_L1.png');
-        //this.load.spritesheet('housesLeft', '../assets/houses_left.png', {frameWidth: 3500, frameHeight: 3500});
     }
-    /*onResize() {
-        this.scale.displaySize.setAspectRatio( SCREEN_W/SCREEN_H );
-        this.scale.refresh();
-        this.create();
-    }*/
+
     /**
      * Creates all objects
      */
     create() {
+        //adds timer to scene
         timer = this.time.addEvent({
             delay: 999999,
             paused: true
           });
-    
-        //this.scale.lockOrientation('landscape');
-
-        		// backgrounds
-		// backgrounds
+        //all the sprites
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-
-       //ctx.drawImage('imgBack', SCREEN_CX, SCREEN_CY);
-
-        // array of sprites that will be "manually" drawn on a rendering texture 
-		// => they must be invisible after creation
-		/*
-        this.canvas = document.getElementById('canvas');
-        this.ctx = canvas.getContext('2d'); // ...and its drawing context
-        this.ctx.canvas.width  = SCREEN_W;
-        this.ctx.canvas.height = SCREEN_H;  
-        */
-
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
         this.playerSprite.displayWidth = SCREEN_W * 0.3;
         this.playerSprite.scaleY= this.playerSprite.scaleX;
-        this.playerSprite.setOrigin(0.5,0.0);
-
-
-        //this.goalSprite = this.add.sprite(0, 0, 'goal').setVisible(false);
-        //this.goalSprite.setOrigin(0.5,0);
-
-        //scale evenly
-        /*
-        this.sprites = [
-            this.add.sprite(0, 0, 'car').setVisible(false),
-        ];*/
+        this.playerSprite.setOrigin(0.5,1);
 
         //settings instance
         this.circuit = new Circuit(this);
         this.settings = new Settings(this);
         this.camera = new Camera(this);
         this.player = new Player(this);
-            // Check touch input
+        
+        // Check touch input
 	    window.addEventListener('touchstart', function()
 	    {	
             //if mainscene is the currentScene
@@ -185,9 +136,10 @@ class MainScene extends Phaser.Scene
             right: 'right'
         }); 
 
+        /*
         this.events.on('resume', function() {
             this.settings.show();
-        }, this);
+        }, this);*/
     }
 
     /**
@@ -248,28 +200,19 @@ class PauseScene extends Phaser.Scene
 
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-        //Start button
-        //this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
-
         //title
         this.titleSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'title').setVisible(true)
         this.titleSprite.displayWidth = SCREEN_H;
-        
-        //information turn mobile
-        //this.turnMobileSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'turn_mobile').setVisible(false);
 
+        // turn sprites, so that the landscape mode is always displayed.
         if(screen.availHeight < screen.availWidth) {
             //in landscape
-            //this.startSprite.angle = 0;
             this.titleSprite.angle = 0;
         } else {
             //in portrait mode
-            //this.turnMobileSprite.setVisible(true);
-            //this.startSprite.angle = 90;
             this.titleSprite.angle = 90;
-            //this.turnMobileSprite.angle = 90;
         }
-            //listener to pause the game
+        //listener to pause the game
         this.input.keyboard.on('keydown-SPACE', function() {
             currentScene = MAIN_SCENE;
             this.scene.resume('SceneMain');
