@@ -33,6 +33,7 @@ class Player
         this.screen.y = SCREEN_H;
     }
 
+    //starts the gyro sensor
     startGyro() {
         gyro.frequency = 10;
         // start gyroscope detection

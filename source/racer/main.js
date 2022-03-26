@@ -224,9 +224,6 @@ class GoalScene extends Phaser.Scene
 
     create(){ 
         this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
-        //Start button
-        //this.startSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'start').setVisible(true);
-
         //title
         this.titleSprite = this.add.sprite(SCREEN_CX, SCREEN_CY, 'title').setVisible(true);
         this.titleSprite.displayWidth = SCREEN_H;

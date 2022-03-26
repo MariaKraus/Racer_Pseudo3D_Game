@@ -69,12 +69,6 @@ class Circuit
         this.pavement_segments = 5;
 
     }
-    onResize() {
-        var player = this.scene.player;
-        var player_segment = this.getSegment(player.z);
-        var section = MATH.floor(player_segment.index / 150);
-        this.createRoad(section);
-    }
 
     /**
      * Creates the entire environment with road and roadside objects
