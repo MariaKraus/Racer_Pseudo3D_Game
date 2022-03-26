@@ -119,7 +119,7 @@ class Circuit
         const COLORS = {
             LIGHT: {road: '0xffffff', curb: '0x000000', pavement: '0x000000', grass: '0x7a7b82',},
             DARK: {road: '0x000000', curb: '0x000000', pavement: '0xffffff', grass: '0x333336'},
-            GOAL: {road: '0xff0000', curb: '0x000000', pavement: '0xff0000', grass: '0x333336'}};
+            GOAL: {road: '0xff0000', curb: '0xff0000', pavement: '0xff0000', grass: '0xff0000'}};
 
 
         //current number of segments
