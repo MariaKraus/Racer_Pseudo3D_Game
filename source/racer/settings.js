@@ -3,15 +3,16 @@ class Settings
     constructor (scene) {
         this.scene = scene;
 		
-		var font = {font: '32px Arial', fill: '#000000'};
-		this.txtPause= scene.add.text(423,423 , '', font);
+		var font = {font: '48px Arial', fill: '#ff1100', stroke: '#000', strokeThickness: 10};
+		this.timetxt = scene.add.text(0 , 0 , '', font);
 		this.show();
 	}
 	
 	/**
 	* Shows all settings.
 	*/	
-	show(){
-		this.txtPause.text = "SPACE Pause";
+	show(time=0, txt=''){
+		var gameRuntime = time;
+		this.timetxt.setText(txt + Math.round(gameRuntime) + " s");
 	}
 }
