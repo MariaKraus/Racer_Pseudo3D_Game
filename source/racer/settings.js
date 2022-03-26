@@ -13,6 +13,6 @@ class Settings
 	*/	
 	show(time=0, txt=''){
 		var gameRuntime = time;
-		this.timetxt.setText(txt + Math.round(gameRuntime));
+		this.timetxt.setText(txt + Math.round(gameRuntime) + " s");
 	}
 }

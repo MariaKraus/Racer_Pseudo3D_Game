@@ -55,7 +55,7 @@ class MainScene extends Phaser.Scene
         mainScene = this.scene;
 
         this.load.image('imgBack', 'source/assets/img_back.png');
-        this.load.image('goal', 'source/assets/Ziel.png');
+        //this.load.image('goal', 'source/assets/Ziel.png');
         this.load.image('car', 'source/assets/car.png');
         
         //this.load.setPath('assets/sprites');
@@ -112,11 +112,11 @@ class MainScene extends Phaser.Scene
         this.playerSprite = this.add.sprite(0, 0, 'car').setVisible(false);
         this.playerSprite.displayWidth = SCREEN_W * 0.3;
         this.playerSprite.scaleY= this.playerSprite.scaleX;
-        this.playerSprite.setOrigin(0.5,0);
+        this.playerSprite.setOrigin(0.5,0.5);
 
 
-        this.goalSprite = this.add.sprite(0, 0, 'goal').setVisible(false);
-        this.goalSprite.setOrigin(0.5,0);
+        //this.goalSprite = this.add.sprite(0, 0, 'goal').setVisible(false);
+        //this.goalSprite.setOrigin(0.5,0);
 
         //scale evenly
         /*
@@ -333,6 +333,7 @@ class GoalScene extends Phaser.Scene
         this.titleSprite.displayWidth = SCREEN_H;
 
         this.starSprite = this.add.sprite(SCREEN_CX, SCREEN_CY + SCREEN_CY/2, 'star').setVisible(true);
+        this.startSprite.scale(2,2);
         this.settings = new Settings(this);
         this.settings.show(score, 'Your time: ');
     }
